@@ -79,4 +79,14 @@ public class MainActivity extends AppCompatActivity {
             Log.d("REST error", error.getMessage());
         }
     };
+
+    public static final String EXTRA_MESSAGE = "com.example.pileaapp.MESSAGE";
+
+    public void addCategoryActivity (View view) {
+        Intent intent = new Intent(this,AddCategoryActivity.class);
+        String message = "Add category to the list.";
+//        Example of sending data.
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+    }
 }
