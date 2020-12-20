@@ -62,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
+            categories.setText("");
+
+
             for (String row: data) {
                 String currentText = categories.getText().toString();
                 categories.setText(currentText + "\n\n" + row);
