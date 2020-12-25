@@ -11,8 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PileaApp">
-        <activity android:name=".AddCategoryActivity">
-        </activity>
+        <activity android:name=".FriendsActivity"></activity>
+        <activity android:name=".LocationsActivity" />
+        <activity android:name=".CatagoriesActivity" />
+        <activity android:name=".PlantsActivity" />
+        <activity android:name=".AddCategoryActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
