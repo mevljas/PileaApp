@@ -2,6 +2,7 @@ package com.example.pileaapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -76,5 +77,12 @@ public class CategoriesActivity extends AppCompatActivity {
             Log.d("REST error", error.getMessage());
         }
     };
+
+    // Acitivity handeling functions
+    public void addCategoryActivity (View view) {
+        Intent intent = new Intent(this,AddCategoryActivity.class);
+
+        startActivity(intent);
+    }
 
 }
