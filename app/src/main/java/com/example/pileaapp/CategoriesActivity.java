@@ -1,6 +1,8 @@
 package com.example.pileaapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,19 +28,30 @@ public class CategoriesActivity extends AppCompatActivity {
     private TextView categories;
     private String url = "https://pilea-web-dev.azurewebsites.net/api/v1/Category";
 
+    static String s1[];
+    RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         categories = (TextView) findViewById(R.id.textView_categories);
+
+        s1 = getResources().getStringArray(R.array.categories);
+        recyclerView = findViewById(R.id.recyclerViewCategories);
+        RecyclerViewAdapter myRecycleViewAdapter = new RecyclerViewAdapter(this,s1);
+        recyclerView.setAdapter(myRecycleViewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     public void showCategories(View view){
         if (view != null){
             JsonArrayRequest request = new JsonArrayRequest(url, jsonArrayListener, errorListener);
             requestQueue.add(request);
+
         }
+
     }
 
 
@@ -46,6 +59,7 @@ public class CategoriesActivity extends AppCompatActivity {
         @Override
         public void onResponse(JSONArray response) {
             ArrayList<String> data = new ArrayList<>();
+
 
             for (int i = 0; i < response.length(); i++){
                 try {
@@ -59,14 +73,16 @@ public class CategoriesActivity extends AppCompatActivity {
                 }
             }
 
-
             categories.setText("");
+
+
 
 
             for (String row: data) {
                 String currentText = categories.getText().toString();
                 categories.setText(currentText + "\n\n" + row);
             }
+
         }
     };
 
