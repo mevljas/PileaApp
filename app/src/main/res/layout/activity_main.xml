@@ -76,4 +76,14 @@
         android:text="Friends"
         app:layout_constraintStart_toStartOf="@+id/PlantsIndex"
         app:layout_constraintTop_toTopOf="@+id/PlantsIndex" />
+
+    <Button
+        android:id="@+id/btn_categoriesIndex"
+        android:layout_width="155dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="65dp"
+        android:onClick="CategoriesActivity"
+        android:text="Categories"
+        app:layout_constraintEnd_toEndOf="@+id/LocationsIndex"
+        app:layout_constraintTop_toTopOf="@+id/LocationsIndex" />
 </androidx.constraintlayout.widget.ConstraintLayout>

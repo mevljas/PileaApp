@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "com.example.pileaapp.MESSAGE";
 
+    // Acitivity handeling functions
+
     public void addCategoryActivity (View view) {
         Intent intent = new Intent(this,AddCategoryActivity.class);
         String message = "Add category to the list.";
@@ -91,12 +93,6 @@ public class MainActivity extends AppCompatActivity {
     //Open Plants Activity
     public void PlantsActivity (View view) {
         Intent intent = new Intent(this,PlantsActivity.class);
-        startActivity(intent);
-    }
-
-    //Open Catagories Activity
-    public void CatagoriesActivity (View view) {
-        Intent intent = new Intent(this, CategoriesActivity.class);
         startActivity(intent);
     }
 
@@ -112,6 +108,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    //Open Friends Activity
+    public void CategoriesActivity (View view) {
+        Intent intent = new Intent(this,CategoriesActivity.class);
+        startActivity(intent);
+    }
 
 }
