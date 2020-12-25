@@ -89,4 +89,31 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }
+
+    //Open Plants Activity
+    public void PlantsActivity (View view) {
+        Intent intent = new Intent(this,PlantsActivity.class);
+        startActivity(intent);
+    }
+
+    //Open Catagories Activity
+    public void CatagoriesActivity (View view) {
+        Intent intent = new Intent(this,CatagoriesActivity.class);
+        startActivity(intent);
+    }
+
+    //Open Locations Activity
+    public void LocationsActivity (View view) {
+        Intent intent = new Intent(this,LocationsActivity.class);
+        startActivity(intent);
+    }
+
+    //Open Friends Activity
+    public void FriendsActivity (View view) {
+        Intent intent = new Intent(this,FriendsActivity.class);
+        startActivity(intent);
+    }
+
+
+
 }
