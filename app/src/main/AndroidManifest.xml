@@ -13,7 +13,7 @@
         android:theme="@style/Theme.PileaApp">
         <activity android:name=".FriendsActivity"></activity>
         <activity android:name=".LocationsActivity" />
-        <activity android:name=".CatagoriesActivity" />
+        <activity android:name=".CategoriesActivity" />
         <activity android:name=".PlantsActivity" />
         <activity android:name=".AddCategoryActivity" />
         <activity android:name=".MainActivity">

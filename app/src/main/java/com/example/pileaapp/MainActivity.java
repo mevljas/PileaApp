@@ -5,12 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -98,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Open Catagories Activity
     public void CatagoriesActivity (View view) {
-        Intent intent = new Intent(this,CatagoriesActivity.class);
+        Intent intent = new Intent(this, CategoriesActivity.class);
         startActivity(intent);
     }
 

@@ -3,7 +3,7 @@
 
     <!--Activity Strings-->
     <string name="plants_activity_name">Plants</string>
-    <string name="catagories_activity_name">Catagories</string>
+    <string name="catagories_activity_name">Categories</string>
     <string name="friends_activity_name">Friends</string>
     <string name="locations_activity_name">Locations</string>
 
