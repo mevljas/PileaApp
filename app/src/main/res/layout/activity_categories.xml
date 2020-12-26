@@ -8,8 +8,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCategories"
-        android:layout_width="368dp"
-        android:layout_height="597dp"
+        android:layout_width="362dp"
+        android:layout_height="530dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="124dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,14 +28,14 @@
 
     <TextView
         android:id="@+id/textView_categories"
-        android:layout_width="360dp"
-        android:layout_height="600dp"
+        android:layout_width="348dp"
+        android:layout_height="530dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.935" />
+        app:layout_constraintVertical_bias="0.616" />
 
     <Button
         android:id="@+id/btn_addCategory"
