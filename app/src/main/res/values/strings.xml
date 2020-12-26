@@ -8,10 +8,6 @@
     <string name="locations_activity_name">Locations</string>
 
     <string-array name="categories">
-        <item>Trees</item>
-        <item>Ferns</item>
-        <item>Flowers</item>
-        <item>Roses</item>
     </string-array>
 
 

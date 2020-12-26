@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,8 +29,10 @@ public class CategoriesActivity extends AppCompatActivity {
     private TextView categories;
     private String url = "https://pilea-web-dev.azurewebsites.net/api/v1/Category";
 
-    static String s1[];
-    RecyclerView recyclerView;
+    String s1[];
+    public static RecyclerView recyclerView;
+    public static RecyclerViewAdapter myRecycleViewAdapter;
+    public Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +43,18 @@ public class CategoriesActivity extends AppCompatActivity {
 
         s1 = getResources().getStringArray(R.array.categories);
         recyclerView = findViewById(R.id.recyclerViewCategories);
-        RecyclerViewAdapter myRecycleViewAdapter = new RecyclerViewAdapter(this,s1);
+        myRecycleViewAdapter = new RecyclerViewAdapter(this,s1);
         recyclerView.setAdapter(myRecycleViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        showCategories(findViewById(android.R.id.content).getRootView());
     }
 
     public void showCategories(View view){
         if (view != null){
             JsonArrayRequest request = new JsonArrayRequest(url, jsonArrayListener, errorListener);
             requestQueue.add(request);
-
         }
-
     }
 
 
@@ -75,13 +78,17 @@ public class CategoriesActivity extends AppCompatActivity {
 
             categories.setText("");
 
+            String[] s = data.toArray(new String[data.size()]);;
 
 
+            myRecycleViewAdapter = new RecyclerViewAdapter(context,s);
+            recyclerView.setAdapter(myRecycleViewAdapter);
 
+            /*
             for (String row: data) {
                 String currentText = categories.getText().toString();
                 categories.setText(currentText + "\n\n" + row);
-            }
+            }*/
 
         }
     };
