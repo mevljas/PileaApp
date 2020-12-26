@@ -36,6 +36,8 @@ public class CategoriesActivity extends AppCompatActivity {
     public RecyclerViewAdapter myRecycleViewAdapter;
     public Context context = this;
     Dialog myDeleteDialog;
+    Dialog myEditDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class CategoriesActivity extends AppCompatActivity {
         showCategories(findViewById(android.R.id.content).getRootView());
 
         myDeleteDialog = new Dialog(this);
+        myEditDialog = new Dialog(this);
     }
 
     public void showCategories(View view){
@@ -129,6 +132,26 @@ public class CategoriesActivity extends AppCompatActivity {
         });
 
         myDeleteDialog.show();
+    }
+
+    public void ShowEditPopup(View v){
+        Button btnClose;
+        Button btnDelete;
+        TextView text;
+        TextView category;
+        myEditDialog.setContentView(R.layout.edit_popup);
+
+        btnClose = (Button) myEditDialog.findViewById(R.id.btn_edit_popup_no);
+        btnDelete = (Button) myEditDialog.findViewById(R.id.btn_edit_popup_yes);
+
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myEditDialog.dismiss();
+            }
+        });
+        myEditDialog.show();
     }
 
 }
