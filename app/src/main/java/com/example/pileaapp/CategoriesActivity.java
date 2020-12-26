@@ -30,8 +30,8 @@ public class CategoriesActivity extends AppCompatActivity {
     private String url = "https://pilea-web-dev.azurewebsites.net/api/v1/Category";
 
     String s1[];
-    public static RecyclerView recyclerView;
-    public static RecyclerViewAdapter myRecycleViewAdapter;
+    public RecyclerView recyclerView;
+    public RecyclerViewAdapter myRecycleViewAdapter;
     public Context context = this;
 
     @Override
