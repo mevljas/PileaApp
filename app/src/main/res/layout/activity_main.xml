@@ -8,41 +8,55 @@
 
     <TextView
         android:id="@+id/categories"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="357dp"
+        android:layout_height="424dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginBottom="10dp"
         android:text="Categories list."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:onClick="showCategories"
-        android:text="Show categories"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        android:id="@+id/PlantsIndex"
+        android:layout_width="174dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:onClick="PlantsActivity"
+        android:text="Plants"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/addStudentActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:onClick="addCategoryActivity"
-        android:text="Add a category"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        android:id="@+id/LocationsIndex"
+        android:layout_width="158dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="28dp"
+        android:onClick="LocationsActivity"
+        android:text="Locations"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/FriendsIndex"
+        android:layout_width="174dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="64dp"
+        android:onClick="FriendsActivity"
+        android:text="Friends"
+        app:layout_constraintStart_toStartOf="@+id/PlantsIndex"
+        app:layout_constraintTop_toTopOf="@+id/PlantsIndex" />
+
+    <Button
+        android:id="@+id/btn_categoriesIndex"
+        android:layout_width="155dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="65dp"
+        android:onClick="CategoriesActivity"
+        android:text="Categories"
+        app:layout_constraintEnd_toEndOf="@+id/LocationsIndex"
+        app:layout_constraintTop_toTopOf="@+id/LocationsIndex" />
 </androidx.constraintlayout.widget.ConstraintLayout>
