@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -20,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -32,6 +35,7 @@ public class CategoriesActivity extends AppCompatActivity {
     public RecyclerView recyclerView;
     public RecyclerViewAdapter myRecycleViewAdapter;
     public Context context = this;
+    Dialog myDeleteDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,8 @@ public class CategoriesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         showCategories(findViewById(android.R.id.content).getRootView());
+
+        myDeleteDialog = new Dialog(this);
     }
 
     public void showCategories(View view){
@@ -102,6 +108,27 @@ public class CategoriesActivity extends AppCompatActivity {
         Intent intent = new Intent(this,AddCategoryActivity.class);
 
         startActivity(intent);
+    }
+
+    public void ShowDeletePopup(View v){
+        Button btnClose;
+        Button btnDelete;
+        TextView text;
+        TextView category;
+        myDeleteDialog.setContentView(R.layout.delete_popup);
+
+        btnClose = (Button) myDeleteDialog.findViewById(R.id.btn_delete_popup_no);
+        btnDelete = (Button) myDeleteDialog.findViewById(R.id.btn_delete_popup_yes);
+
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDeleteDialog.dismiss();
+            }
+        });
+
+        myDeleteDialog.show();
     }
 
 }
