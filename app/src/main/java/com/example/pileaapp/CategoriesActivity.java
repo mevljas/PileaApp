@@ -26,7 +26,6 @@ import java.util.ArrayList;
 public class CategoriesActivity extends AppCompatActivity {
 
     private RequestQueue requestQueue;
-    private TextView categories;
     private String url = "https://pilea-web-dev.azurewebsites.net/api/v1/Category";
 
     String s1[];
@@ -39,7 +38,6 @@ public class CategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
-        categories = (TextView) findViewById(R.id.textView_categories);
 
         s1 = getResources().getStringArray(R.array.categories);
         recyclerView = findViewById(R.id.recyclerViewCategories);
@@ -75,8 +73,6 @@ public class CategoriesActivity extends AppCompatActivity {
                     return;
                 }
             }
-
-            categories.setText("");
 
             String[] s = data.toArray(new String[data.size()]);;
 

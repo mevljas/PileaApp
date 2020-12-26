@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
     //Open Plants Activity
     public void PlantsActivity (View view) {
         Intent intent = new Intent(this,PlantsActivity.class);
