@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,6 +26,8 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CategoriesActivity extends AppCompatActivity {
 
@@ -60,7 +63,15 @@ public class CategoriesActivity extends AppCompatActivity {
 
     public void showCategories(View view){
         if (view != null){
-            JsonArrayRequest request = new JsonArrayRequest(url, jsonArrayListener, errorListener);
+            JsonArrayRequest request = new JsonArrayRequest(url, jsonArrayListener, errorListener){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError
+                {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("ApiKey", "PileaSecretKey1x");
+                    return params;
+                }
+            };
             requestQueue.add(request);
         }
     }
