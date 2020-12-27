@@ -29,7 +29,8 @@ import java.util.ArrayList;
 public class CategoriesActivity extends AppCompatActivity {
 
     private RequestQueue requestQueue;
-    private String url = "https://pilea-web-dev.azurewebsites.net/api/v1/Category";
+//    private String url = "https://pilea-web-dev.azurewebsites.net/api/v1/Category";     //Azure
+    private String url = "https://pilea-web-dev.azurewebsites.net/api/v1/Category";     //local
 
     String s1[];
     public RecyclerView recyclerView;
