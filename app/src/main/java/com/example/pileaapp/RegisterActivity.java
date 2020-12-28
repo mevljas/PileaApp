@@ -49,28 +49,22 @@ public class RegisterActivity extends AppCompatActivity {
             formValid = false;
             System.out.println("No special characters");
         }
-        if(!UpperCasePatten.matcher(password1.getText()).find()){
+        if(!UpperCasePatten.matcher(password1.getText().toString()).find()){
             formValid = false;
             System.out.println("No uppsercase characters");
         }
-        if(!lowerCasePatten.matcher(password1.getText()).find()){
+        if(!lowerCasePatten.matcher(password1.getText().toString()).find()){
             formValid = false;
             System.out.println("No lowercase characters");
         }
-        if(!digitCasePatten.matcher(password1.getText()).find()){
+        if(!digitCasePatten.matcher(password1.getText().toString()).find()){
             formValid = false;
             System.out.println("No digital characters");
         }
-        //For some reason this doesnt work
-        /*
-        if(!((password1.getText()).equals(password2.getText()))){
+        if(!((password1.getText().toString()).equals(password2.getText().toString()))){
             formValid = false;
             System.out.println(password1.getText()+" password dont match "+password2.getText());
-        }*/
-
-        //Fix the password equals thing
-
-
+        }
 
         return formValid;
     }
