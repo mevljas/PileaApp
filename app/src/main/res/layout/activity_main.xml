@@ -59,4 +59,14 @@
         android:text="Categories"
         app:layout_constraintEnd_toEndOf="@+id/LocationsIndex"
         app:layout_constraintTop_toTopOf="@+id/LocationsIndex" />
+
+    <Button
+        android:id="@+id/LoginIndex"
+        android:layout_width="172dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:onClick="LoginActivity"
+        android:text="Login"
+        app:layout_constraintStart_toStartOf="@+id/FriendsIndex"
+        app:layout_constraintTop_toBottomOf="@+id/FriendsIndex" />
 </androidx.constraintlayout.widget.ConstraintLayout>
