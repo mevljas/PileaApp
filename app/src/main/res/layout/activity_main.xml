@@ -6,6 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <View
+        android:id="@+id/myRectangleView"
+        android:layout_width="413dp"
+        android:layout_height="65dp"
+        android:background="@drawable/obj_rectangle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="131dp"
+        android:layout_height="129dp"
+        android:layout_marginBottom="620dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_circle"
+        app:tint="#53787E" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="166dp"
+        android:layout_height="162dp"
+
+        android:layout_marginBottom="584dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_pilea_icon"
+        app:tint="@color/white" />
+
+    <Button
+        android:id="@+id/PlantsIndex"
+        android:layout_width="174dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="112dp"
+        android:onClick="PlantsActivity"
+        android:text="Plants"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/categories"
         android:layout_width="357dp"
@@ -19,32 +62,10 @@
         tools:layout_constraintTop_creator="1" />
 
     <Button
-        android:id="@+id/PlantsIndex"
-        android:layout_width="174dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:onClick="PlantsActivity"
-        android:text="Plants"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/LocationsIndex"
-        android:layout_width="158dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="28dp"
-        android:onClick="LocationsActivity"
-        android:text="Locations"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/FriendsIndex"
         android:layout_width="174dp"
         android:layout_height="49dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="68dp"
         android:onClick="FriendsActivity"
         android:text="Friends"
         app:layout_constraintStart_toStartOf="@+id/PlantsIndex"
@@ -54,7 +75,7 @@
         android:id="@+id/btn_categoriesIndex"
         android:layout_width="155dp"
         android:layout_height="47dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="64dp"
         android:onClick="CategoriesActivity"
         android:text="Categories"
         app:layout_constraintEnd_toEndOf="@+id/LocationsIndex"
@@ -64,11 +85,22 @@
         android:id="@+id/LoginIndex"
         android:layout_width="172dp"
         android:layout_height="50dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:onClick="LoginActivity"
         android:text="Login"
         app:layout_constraintStart_toStartOf="@+id/FriendsIndex"
         app:layout_constraintTop_toBottomOf="@+id/FriendsIndex" />
+
+    <Button
+        android:id="@+id/LocationsIndex"
+        android:layout_width="158dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="28dp"
+        android:onClick="LocationsActivity"
+        android:text="Locations"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView_plants"
