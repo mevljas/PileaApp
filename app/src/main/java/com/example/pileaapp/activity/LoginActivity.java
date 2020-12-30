@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pileaapp.R;
@@ -75,6 +77,8 @@ public class LoginActivity extends AppCompatActivity {
                         MainActivity.userLogin = login;
                         login.setToken("Bearer " + login.getToken());
 
+                        showMainActivity();
+
 
 
                     }
@@ -85,6 +89,13 @@ public class LoginActivity extends AppCompatActivity {
                     public void onError(Throwable e) {
                         // oops, we best show some error message
                         Log.d(TAG, "ERROR: " + e.getMessage());
+                        //Toast
+                        Context context = getApplicationContext();
+                        CharSequence text = "Login failed";
+                        int duration = Toast.LENGTH_SHORT;
+                        view.setBackgroundResource(R.color.white);
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
 
                     }
 
@@ -97,6 +108,11 @@ public class LoginActivity extends AppCompatActivity {
     //Open Register Activity
     public void RegisterActivity (View view) {
         Intent intent = new Intent(this,RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    public void showMainActivity () {
+        Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
 }
