@@ -8,7 +8,7 @@
 
 
     <View
-        android:id="@+id/rectangle_at_the_top"
+        android:id="@+id/loginVRectangle"
         android:layout_width="match_parent"
         android:layout_height="253dp"
         android:layout_alignParentTop="true"
@@ -18,30 +18,30 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/loginIVCircle"
         android:layout_width="207dp"
         android:layout_height="186dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="100dp"
-        app:layout_constraintEnd_toEndOf="@+id/rectangle_at_the_top"
-        app:layout_constraintTop_toTopOf="@+id/rectangle_at_the_top"
+        app:layout_constraintEnd_toEndOf="@+id/loginVRectangle"
+        app:layout_constraintTop_toTopOf="@+id/loginVRectangle"
         app:srcCompat="@drawable/ic_circle"
         app:tint="@color/white" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/loginIVLogo"
         android:layout_width="212dp"
         android:layout_height="230dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="96dp"
 
-        app:layout_constraintEnd_toEndOf="@+id/rectangle_at_the_top"
-        app:layout_constraintTop_toTopOf="@+id/rectangle_at_the_top"
+        app:layout_constraintEnd_toEndOf="@+id/loginVRectangle"
+        app:layout_constraintTop_toTopOf="@+id/loginVRectangle"
         app:srcCompat="@drawable/ic_pilea_icon"
         app:tint="#4C7177" />
 
     <EditText
-        android:id="@+id/editText_login_email"
+        android:id="@+id/loginETEmail"
         android:layout_width="316dp"
         android:layout_height="46dp"
         android:layout_marginTop="24dp"
@@ -52,10 +52,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView_login_email" />
+        app:layout_constraintTop_toTopOf="@+id/loginTVEmail" />
 
     <EditText
-        android:id="@+id/editText_login_password"
+        android:id="@+id/loginETPassword"
         android:layout_width="318dp"
         android:layout_height="50dp"
         android:layout_marginStart="48dp"
@@ -65,10 +65,10 @@
         android:textColor="#4C7177"
         app:backgroundTint="#4C7177"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_login_password" />
+        app:layout_constraintTop_toBottomOf="@+id/loginTVPassword" />
 
     <TextView
-        android:id="@+id/textView_login_email"
+        android:id="@+id/loginTVEmail"
         android:layout_width="56dp"
         android:layout_height="25dp"
         android:layout_marginStart="44dp"
@@ -77,10 +77,10 @@
         android:textColor="#4C7177"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/rectangle_at_the_top" />
+        app:layout_constraintTop_toTopOf="@+id/loginVRectangle" />
 
     <TextView
-        android:id="@+id/textView_login_password"
+        android:id="@+id/loginTVPassword"
         android:layout_width="84dp"
         android:layout_height="29dp"
         android:layout_marginStart="44dp"
@@ -89,10 +89,10 @@
         android:textColor="#4C7177"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_login_email" />
+        app:layout_constraintTop_toBottomOf="@+id/loginETEmail" />
 
     <Button
-        android:id="@+id/btn_login_login"
+        android:id="@+id/loginBLogin"
         android:layout_width="318dp"
         android:layout_height="53dp"
         android:layout_marginStart="48dp"
@@ -100,10 +100,10 @@
         android:onClick="loginUser"
         android:text="Login"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_login_password" />
+        app:layout_constraintTop_toBottomOf="@+id/loginETPassword" />
 
     <Button
-        android:id="@+id/btn_login_register"
+        android:id="@+id/loginBRegister"
         android:layout_width="314dp"
         android:layout_height="56dp"
         android:layout_marginStart="48dp"
@@ -111,10 +111,10 @@
         android:onClick="RegisterActivity"
         android:text="Register"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_login_or" />
+        app:layout_constraintTop_toBottomOf="@+id/loginTVRegister" />
 
     <TextView
-        android:id="@+id/textView_login_or"
+        android:id="@+id/loginTVRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -122,7 +122,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login_login" />
+        app:layout_constraintTop_toBottomOf="@+id/loginBLogin" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

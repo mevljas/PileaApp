@@ -7,17 +7,17 @@
     tools:context=".activity.AddLocationActivity">
 
     <Button
-        android:id="@+id/btn_addlocation"
+        android:id="@+id/addLocationBSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit"
         android:onClick="addLocation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_location" />
+        app:layout_constraintTop_toBottomOf="@+id/addLocationETInput" />
 
 
     <EditText
-        android:id="@+id/textView_location"
+        android:id="@+id/addLocationETInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
@@ -28,11 +28,11 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <TextView
-        android:id="@+id/status2"
+        android:id="@+id/addLocationTVStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_addlocation" />
+        app:layout_constraintTop_toBottomOf="@+id/addLocationBSubmit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

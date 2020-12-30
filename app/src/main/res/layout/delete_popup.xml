@@ -12,7 +12,7 @@
     >
 
     <TextView
-        android:id="@+id/textView_delete_popup_title"
+        android:id="@+id/deletePopUpTVTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="88dp"
@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_delete_popup_text"
+        android:id="@+id/deletePopUpTVText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="132dp"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_delete_popup_yes"
+        android:id="@+id/deletePopUpBYes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="44dp"
@@ -48,7 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/btn_delete_popup_no"
+        android:id="@+id/deletePopUpBNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
@@ -59,7 +59,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/deletePopUpIVTrash"
         android:layout_width="85dp"
         android:layout_height="78dp"
         android:layout_marginTop="4dp"

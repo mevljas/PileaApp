@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pileaapp.R;
-import com.example.pileaapp.api.models.Category;
 import com.example.pileaapp.api.models.Location;
 
 import io.reactivex.Single;
@@ -34,8 +33,8 @@ public class AddLocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
 
-        locationCreateText = (EditText) findViewById(R.id.textView_location);
-        status = (TextView) findViewById(R.id.status2);
+        locationCreateText = (EditText) findViewById(R.id.addLocationETInput);
+        status = (TextView) findViewById(R.id.addLocationTVStatus);
     }
 
 

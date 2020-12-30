@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         AnimateButtons();
 
-        Button plants = findViewById(R.id.PlantsIndex);
+        Button plants = findViewById(R.id.mainBPlants);
 
         loginNecesaryToast= Toast.makeText(getApplicationContext(),
                 "User must be logged in.",
@@ -42,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void AnimateButtons(){
-        ImageView categories = findViewById(R.id.imageView_categories);
-        ImageView home = findViewById(R.id.imageView_home);
-        ImageView social = findViewById(R.id.imageView_social);
-        ImageView locations = findViewById(R.id.imageView_locations);
-        ImageView plant = findViewById(R.id.imageView_plants);
+        ImageView categories = findViewById(R.id.mainIVCategories);
+        ImageView home = findViewById(R.id.mainIVHome);
+        ImageView social = findViewById(R.id.mainIVFriends);
+        ImageView locations = findViewById(R.id.mainIVLocations);
+        ImageView plant = findViewById(R.id.mainIVPlants);
 
         categories.setTranslationY(300);
         home.setTranslationY(300);

@@ -14,16 +14,12 @@ import android.widget.Toast;
 import com.example.pileaapp.R;
 import com.example.pileaapp.api.models.Category;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.RequestBody;
 
 public class AddCategoryActivity extends AppCompatActivity {
 
@@ -38,8 +34,8 @@ public class AddCategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_category);
 
-        categoryCreateText = (EditText) findViewById(R.id.teCategory);
-        status = (TextView) findViewById(R.id.status);
+        categoryCreateText = (EditText) findViewById(R.id.addCategoryETInput);
+        status = (TextView) findViewById(R.id.addCategoryTVStatus);
     }
 
     public void addCategory(View view)

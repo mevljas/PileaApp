@@ -3,7 +3,6 @@ package com.example.pileaapp.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -37,9 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        email = (EditText) findViewById(R.id.editTextEmail_register);
-        password1 = (EditText) findViewById(R.id.editPassword_register);
-        password2 = (EditText) findViewById(R.id.editPassword2_register);
+        email = (EditText) findViewById(R.id.registerETEmail);
+        password1 = (EditText) findViewById(R.id.registerETPassword);
+        password2 = (EditText) findViewById(R.id.registerETPasswordConfirm);
     }
 
     //Register user
