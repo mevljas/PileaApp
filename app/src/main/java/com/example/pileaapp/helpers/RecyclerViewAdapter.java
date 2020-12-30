@@ -1,4 +1,4 @@
-package com.example.pileaapp;
+package com.example.pileaapp.helpers;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,12 +9,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pileaapp.R;
+import com.example.pileaapp.api.models.Category;
+import com.example.pileaapp.api.models.Location;
+
+import java.util.List;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
-    String data[];
+    List data;
     Context context;
 
-    public RecyclerViewAdapter(Context ct, String[] s1){
+    public RecyclerViewAdapter(Context ct, List s1){
         this.context = ct;
         this.data = s1;
     }
@@ -30,14 +36,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.myText1.setText(data[position]);
+//        TODO: this has to be done differently for different object types. This is just a temporary fix.
+        if (data.get(position) instanceof Category)
+            holder.myText1.setText(((Category) data.get(position)).getPlantCategory());
+        else if (data.get(position) instanceof Location)
+            holder.myText1.setText(((Location) data.get(position)).getName());
 
 
     }
 
     @Override
     public int getItemCount() {
-        return data.length;
+        return data.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

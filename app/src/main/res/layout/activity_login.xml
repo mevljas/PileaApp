@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".activity.LoginActivity">
 
 
     <View
@@ -97,6 +97,7 @@
         android:layout_height="53dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="12dp"
+        android:onClick="loginUser"
         android:text="Login"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_login_password" />

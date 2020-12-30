@@ -11,15 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PileaApp">
-        <activity android:name=".AddLocationActivity"></activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".CategoriesActivity" />
-        <activity android:name=".FriendsActivity" />
-        <activity android:name=".LocationsActivity" />
-        <activity android:name=".PlantsActivity" />
-        <activity android:name=".AddCategoryActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.AddLocationActivity"></activity>
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.CategoriesActivity" />
+        <activity android:name=".activity.FriendsActivity" />
+        <activity android:name=".activity.LocationsActivity" />
+        <activity android:name=".activity.PlantsActivity" />
+        <activity android:name=".activity.AddCategoryActivity" />
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
