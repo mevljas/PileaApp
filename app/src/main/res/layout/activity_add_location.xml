@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddLocationActivity">
+    tools:context=".activity.AddLocationActivity">
 
     <Button
         android:id="@+id/btn_addlocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit"
+        android:onClick="addLocation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_location" />
+
 
     <EditText
         android:id="@+id/textView_location"
