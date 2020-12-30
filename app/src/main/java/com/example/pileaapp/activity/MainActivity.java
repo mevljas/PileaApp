@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.pileaapp.R;
@@ -30,10 +32,39 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initializeApi();
 
+        AnimateButtons();
+
+        Button plants = findViewById(R.id.PlantsIndex);
+
         loginNecesaryToast= Toast.makeText(getApplicationContext(),
                 "User must be logged in.",
                 Toast.LENGTH_SHORT);
     }
+
+    public void AnimateButtons(){
+        ImageView categories = findViewById(R.id.imageView_categories);
+        ImageView home = findViewById(R.id.imageView_home);
+        ImageView social = findViewById(R.id.imageView_social);
+        ImageView locations = findViewById(R.id.imageView_locations);
+        ImageView plant = findViewById(R.id.imageView_plants);
+
+        categories.setTranslationY(300);
+        home.setTranslationY(300);
+        social.setTranslationY(300);
+        locations.setTranslationY(300);
+        plant.setTranslationY(300);
+
+        categories.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
+        home.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
+        social.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
+        locations.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
+        plant.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
+
+
+
+
+    }
+
 
 
     private void initializeApi(){
