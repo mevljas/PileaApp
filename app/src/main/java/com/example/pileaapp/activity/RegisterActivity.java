@@ -2,12 +2,13 @@ package com.example.pileaapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.pileaapp.R;
 import com.example.pileaapp.api.models.Register;
@@ -35,9 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        email = (EditText) findViewById(R.id.editTextEmail_register);
-        password1 = (EditText) findViewById(R.id.editPassword_register);
-        password2 = (EditText) findViewById(R.id.editPassword2_register);
+        email = (EditText) findViewById(R.id.registerETEmail);
+        password1 = (EditText) findViewById(R.id.registerETPassword);
+        password2 = (EditText) findViewById(R.id.registerETPasswordConfirm);
     }
 
     //Register user
@@ -76,6 +77,14 @@ public class RegisterActivity extends AppCompatActivity {
                         // data is ready and we can update the UI
                         Log.d(TAG, "SUCCESS");
                         Log.d(TAG, "Registration successful.");
+
+                        //Toast
+                        Context context = getApplicationContext();
+                        CharSequence text = "User registerd";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
 
 
                     }

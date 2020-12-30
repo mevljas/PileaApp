@@ -2,11 +2,15 @@ package com.example.pileaapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pileaapp.R;
 import com.example.pileaapp.api.models.Login;
@@ -30,8 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        email = (EditText) findViewById(R.id.editText_login_email);
-        password1 = (EditText) findViewById(R.id.editText_login_password);
+        email = (EditText) findViewById(R.id.loginETEmail);
+        password1 = (EditText) findViewById(R.id.loginETPassword);
     }
 
 
@@ -60,9 +64,20 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d(TAG, "SUCCESS");
                         Log.d(TAG, "Login successful.");
 
+                        //Toast
+                        Context context = getApplicationContext();
+                        CharSequence text = "Login successful";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+
+
 //                        Save currently logged user and set the token.
                         MainActivity.userLogin = login;
                         login.setToken("Bearer " + login.getToken());
+
+                        showMainActivity();
 
 
 
@@ -74,6 +89,13 @@ public class LoginActivity extends AppCompatActivity {
                     public void onError(Throwable e) {
                         // oops, we best show some error message
                         Log.d(TAG, "ERROR: " + e.getMessage());
+                        //Toast
+                        Context context = getApplicationContext();
+                        CharSequence text = "Login failed";
+                        int duration = Toast.LENGTH_SHORT;
+                        view.setBackgroundResource(R.color.white);
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
 
                     }
 
@@ -86,6 +108,11 @@ public class LoginActivity extends AppCompatActivity {
     //Open Register Activity
     public void RegisterActivity (View view) {
         Intent intent = new Intent(this,RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    public void showMainActivity () {
+        Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
 }

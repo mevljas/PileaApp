@@ -13,25 +13,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.pileaapp.R;
-import com.example.pileaapp.api.models.Category;
 import com.example.pileaapp.api.models.Location;
 import com.example.pileaapp.helpers.RecyclerViewAdapter;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
@@ -56,7 +42,7 @@ public class LocationsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locations);
-        recyclerView = findViewById(R.id.recyclerViewLocations);
+        recyclerView = findViewById(R.id.locationsRVLocations);
 //        myRecycleViewAdapter = new RecyclerViewAdapter(this,s1);
         recyclerView.setAdapter(myRecycleViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -135,9 +121,9 @@ public class LocationsActivity extends AppCompatActivity {
         TextView text;
         myDeleteDialog.setContentView(R.layout.delete_popup);
 
-        btnClose = (Button) myDeleteDialog.findViewById(R.id.btn_delete_popup_no);
-        btnDelete = (Button) myDeleteDialog.findViewById(R.id.btn_delete_popup_yes);
-        text = (TextView) myDeleteDialog.findViewById(R.id.textView_delete_popup_text);
+        btnClose = (Button) myDeleteDialog.findViewById(R.id.deletePopUpBNo);
+        btnDelete = (Button) myDeleteDialog.findViewById(R.id.deletePopUpBYes);
+        text = (TextView) myDeleteDialog.findViewById(R.id.deletePopUpTVText);
 
         text.setText("Do you really want to delete this location?");
 
@@ -159,8 +145,8 @@ public class LocationsActivity extends AppCompatActivity {
 
         myEditDialog.setContentView(R.layout.edit_popup);
 
-        btnClose = (Button) myEditDialog.findViewById(R.id.btn_edit_popup_no);
-        btnDelete = (Button) myEditDialog.findViewById(R.id.btn_edit_popup_yes);
+        btnClose = (Button) myEditDialog.findViewById(R.id.editPopUpBNo);
+        btnDelete = (Button) myEditDialog.findViewById(R.id.editPopUpBYes);
 
 
         btnClose.setOnClickListener(new View.OnClickListener() {

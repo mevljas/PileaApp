@@ -7,7 +7,7 @@
     tools:context=".activity.RegisterActivity">
 
     <View
-        android:id="@+id/rectangle_at_the_top2"
+        android:id="@+id/registerVRectangle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView_register_circle"
+        android:id="@+id/registerIVCircle"
         android:layout_width="131dp"
         android:layout_height="121dp"
         android:layout_marginTop="16dp"
@@ -28,7 +28,7 @@
         app:tint="@color/white" />
 
     <ImageView
-        android:id="@+id/imageView_register_pileaIcon"
+        android:id="@+id/registerIVLogo"
         android:layout_width="116dp"
         android:layout_height="142dp"
 
@@ -40,7 +40,7 @@
         app:tint="#4C7177" />
 
     <TextView
-        android:id="@+id/textView_register_email"
+        android:id="@+id/registerTVEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
@@ -51,18 +51,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_register_password2"
+        android:id="@+id/registerTVPasswordConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="20dp"
         android:text="Confirm password"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/rectangle_at_the_top2"
-        app:layout_constraintTop_toBottomOf="@+id/editPassword_register" />
+        app:layout_constraintStart_toStartOf="@+id/registerVRectangle"
+        app:layout_constraintTop_toBottomOf="@+id/registerETPassword" />
 
     <TextView
-        android:id="@+id/textView_register_password"
+        android:id="@+id/registerTVPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
@@ -70,10 +70,10 @@
         android:text="Password"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail_register" />
+        app:layout_constraintTop_toBottomOf="@+id/registerETEmail" />
 
     <EditText
-        android:id="@+id/editPassword_register"
+        android:id="@+id/registerETPassword"
         android:layout_width="334dp"
         android:layout_height="54dp"
         android:layout_marginStart="36dp"
@@ -83,10 +83,10 @@
         android:inputType="textPassword"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_register_password" />
+        app:layout_constraintTop_toBottomOf="@+id/registerTVPassword" />
 
     <EditText
-        android:id="@+id/editPassword2_register"
+        android:id="@+id/registerETPasswordConfirm"
         android:layout_width="334dp"
         android:layout_height="54dp"
         android:layout_marginStart="36dp"
@@ -96,10 +96,10 @@
         android:inputType="textPassword"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_register_password2" />
+        app:layout_constraintTop_toBottomOf="@+id/registerTVPasswordConfirm" />
 
     <Button
-        android:id="@+id/btn_register_confirm"
+        android:id="@+id/registerBRegister"
         android:layout_width="330dp"
         android:layout_height="73dp"
         android:layout_marginTop="24dp"
@@ -110,10 +110,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPassword2_register" />
+        app:layout_constraintTop_toBottomOf="@+id/registerETPasswordConfirm" />
 
     <EditText
-        android:id="@+id/editTextEmail_register"
+        android:id="@+id/registerETEmail"
         android:layout_width="334dp"
         android:layout_height="54dp"
         android:layout_marginStart="36dp"
@@ -123,5 +123,5 @@
         android:inputType="textEmailAddress"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_register_email" />
+        app:layout_constraintTop_toBottomOf="@+id/registerTVEmail" />
 </androidx.constraintlayout.widget.ConstraintLayout>

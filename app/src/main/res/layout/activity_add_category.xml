@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/teCategory"
+            android:id="@+id/addCategoryETInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -28,14 +28,14 @@
             android:text="Category" />
 
         <Button
-            android:id="@+id/submit"
+            android:id="@+id/addCategoryBSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="addCategory"
-            android:text="Submit" />
+            android:text="Add" />
 
         <TextView
-            android:id="@+id/status"
+            android:id="@+id/addCategoryTVStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />

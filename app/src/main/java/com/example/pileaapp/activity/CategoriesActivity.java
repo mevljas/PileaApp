@@ -26,7 +26,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Response;
 
 public class CategoriesActivity extends AppCompatActivity {
 
@@ -49,7 +48,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
 
         s1 = new ArrayList();
-        recyclerView = findViewById(R.id.recyclerViewCategories);
+        recyclerView = findViewById(R.id.categoriesRVCategories);
         myRecycleViewAdapter = new RecyclerViewAdapter(this, s1);
         recyclerView.setAdapter(myRecycleViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -130,8 +129,8 @@ public class CategoriesActivity extends AppCompatActivity {
         TextView category;
         myDeleteDialog.setContentView(R.layout.delete_popup);
 
-        btnClose = (Button) myDeleteDialog.findViewById(R.id.btn_delete_popup_no);
-        btnDelete = (Button) myDeleteDialog.findViewById(R.id.btn_delete_popup_yes);
+        btnClose = (Button) myDeleteDialog.findViewById(R.id.deletePopUpBNo);
+        btnDelete = (Button) myDeleteDialog.findViewById(R.id.deletePopUpBYes);
 
 
         btnClose.setOnClickListener(new View.OnClickListener() {
@@ -151,8 +150,8 @@ public class CategoriesActivity extends AppCompatActivity {
         TextView category;
         myEditDialog.setContentView(R.layout.edit_popup);
 
-        btnClose = (Button) myEditDialog.findViewById(R.id.btn_edit_popup_no);
-        btnDelete = (Button) myEditDialog.findViewById(R.id.btn_edit_popup_yes);
+        btnClose = (Button) myEditDialog.findViewById(R.id.editPopUpBNo);
+        btnDelete = (Button) myEditDialog.findViewById(R.id.editPopUpBYes);
 
 
         btnClose.setOnClickListener(new View.OnClickListener() {
