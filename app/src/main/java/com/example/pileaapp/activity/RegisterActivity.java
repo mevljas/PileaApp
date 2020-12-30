@@ -2,12 +2,14 @@ package com.example.pileaapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.pileaapp.R;
 import com.example.pileaapp.api.models.Register;
@@ -76,6 +78,14 @@ public class RegisterActivity extends AppCompatActivity {
                         // data is ready and we can update the UI
                         Log.d(TAG, "SUCCESS");
                         Log.d(TAG, "Registration successful.");
+
+                        //Toast
+                        Context context = getApplicationContext();
+                        CharSequence text = "User registerd";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
 
 
                     }
