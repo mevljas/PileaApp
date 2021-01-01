@@ -35,7 +35,7 @@ public class CategoriesActivity extends AppCompatActivity {
     public RecyclerViewAdapter myRecycleViewAdapter;
     public Context context = this;
     Dialog myDeleteDialog;
-    Dialog myEditDialog;
+    Dialog editDialog;
     CompositeDisposable compositeDisposable;
 
     private static final String TAG = CategoriesActivity.class.getSimpleName();
@@ -53,11 +53,12 @@ public class CategoriesActivity extends AppCompatActivity {
         recyclerView.setAdapter(myRecycleViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
 //        showCategories(findViewById(android.R.id.content).getRootView());
 
 
         myDeleteDialog = new Dialog(this);
-        myEditDialog = new Dialog(this);
+        editDialog = new Dialog(this);
 
 
     }
@@ -148,19 +149,19 @@ public class CategoriesActivity extends AppCompatActivity {
         Button btnDelete;
         TextView text;
         TextView category;
-        myEditDialog.setContentView(R.layout.edit_popup);
+        editDialog.setContentView(R.layout.categories_edit_popup);
 
-        btnClose = (Button) myEditDialog.findViewById(R.id.editPopUpBNo);
-        btnDelete = (Button) myEditDialog.findViewById(R.id.editPopUpBYes);
+        btnClose = (Button) editDialog.findViewById(R.id.editPopUpBNo);
+        btnDelete = (Button) editDialog.findViewById(R.id.editPopUpBYes);
 
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myEditDialog.dismiss();
+                editDialog.dismiss();
             }
         });
-        myEditDialog.show();
+        editDialog.show();
     }
 
     @Override
