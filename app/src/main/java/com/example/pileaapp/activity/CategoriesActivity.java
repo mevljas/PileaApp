@@ -123,9 +123,6 @@ public class CategoriesActivity extends AppCompatActivity {
     public void editCategory(Category selectedCategory)
     {
         compositeDisposable = new CompositeDisposable();
-        System.out.println("test");
-        System.out.println(selectedCategory.getPlantCategory());
-        System.out.println(selectedCategory.getCategoryID());
 
 
 
@@ -143,11 +140,58 @@ public class CategoriesActivity extends AppCompatActivity {
                     public void onSuccess(Category category) {
                         // data is ready and we can update the UI
                         Log.d(TAG, "SUCCESS");
-                        Log.d(TAG, "Category created: " + category.getPlantCategory());
+                        Log.d(TAG, "Category edited: " + category.getPlantCategory());
 
                         //Toast
                         Context context = getApplicationContext();
                         CharSequence text = "Category edited.";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // oops, we best show some error message
+                        Log.d(TAG, "ERROR: " + e.getMessage());
+                    }
+
+
+                });
+
+
+    }
+
+
+    public void deleteCategory(Category selectedCategory)
+    {
+        compositeDisposable = new CompositeDisposable();
+
+
+
+        Single<Category> categorySingle = MainActivity.apiService.deleteCategory(selectedCategory.getCategoryID(), MainActivity.userLogin.getToken(), MainActivity.API_KEY);
+        categorySingle.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Category>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        first we create a CompositeDisposable object which acts as a container for disposables
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(Category category) {
+                        // data is ready and we can update the UI
+                        Log.d(TAG, "SUCCESS");
+                        Log.d(TAG, "Category deleted: " + category.getPlantCategory());
+
+                        //Toast
+                        Context context = getApplicationContext();
+                        CharSequence text = "Category deleted.";
                         int duration = Toast.LENGTH_SHORT;
 
                         Toast toast = Toast.makeText(context, text, duration);
@@ -178,15 +222,23 @@ public class CategoriesActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public static void ShowDeletePopup(View v, Category category) {
+    public void ShowDeletePopup(View v, Category category) {
         Button btnClose;
         Button btnDelete;
-        TextView textView;
-        TextView categoryView;
         deleteDialog.setContentView(R.layout.delete_popup);
 
         btnClose = (Button) deleteDialog.findViewById(R.id.deletePopUpBNo);
         btnDelete = (Button) deleteDialog.findViewById(R.id.deletePopUpBYes);
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                deleteCategory(category);
+                deleteDialog.dismiss();
+                showCategories();
+            }
+        });
 
 
         btnClose.setOnClickListener(new View.OnClickListener() {

@@ -11,6 +11,7 @@ import io.reactivex.Single;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -48,6 +49,13 @@ public interface ApiService {
                                   @Header("Authorization") String token,
                                     @Header("ApiKey") String apiKey,
                                     @Body Category categoryBody);
+
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @DELETE("Category/{id}")
+    Single<Category> deleteCategory(@Path("id") int categoryID,
+                                    @Header("Authorization") String token,
+                                  @Header("ApiKey") String apiKey);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @POST("Authenticate/register")
