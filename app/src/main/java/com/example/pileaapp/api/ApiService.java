@@ -79,4 +79,18 @@ public interface ApiService {
                                     @Header("ApiKey") String apiKey,
                                     @Query("userId") String userId,
                                     @Body Location locationBody);
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @PUT("Location/{id}")
+    Single<Location> editLocation(@Path("id") int locationID,
+                                  @Header("Authorization") String token,
+                                  @Header("ApiKey") String apiKey,
+                                  @Body Location locationBody);
+
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @DELETE("Location/{id}")
+    Single<Location> deleteLocation(@Path("id") int locationID,
+                                    @Header("Authorization") String token,
+                                    @Header("ApiKey") String apiKey);
 }

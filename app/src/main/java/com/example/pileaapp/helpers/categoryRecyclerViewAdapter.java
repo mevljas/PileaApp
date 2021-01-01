@@ -72,7 +72,7 @@ public class categoryRecyclerViewAdapter extends RecyclerView.Adapter<categoryRe
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            myText1 = itemView.findViewById(R.id.RowCategoryName);
+            myText1 = (TextView) itemView.findViewById(R.id.RowCategoryName);
             editButton = (ImageView) itemView.findViewById(R.id.rowCategoryEdit);
             deleteButton = (ImageButton) itemView.findViewById(R.id.rowCategoryDelete);
         }

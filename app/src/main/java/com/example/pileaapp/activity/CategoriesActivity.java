@@ -39,7 +39,7 @@ public class CategoriesActivity extends AppCompatActivity {
     static Dialog deleteDialog;
     static Dialog editDialog;
     CompositeDisposable compositeDisposable;
-    static Category selectedCategory;
+
 
     private static final String TAG = CategoriesActivity.class.getSimpleName();
 
@@ -225,10 +225,14 @@ public class CategoriesActivity extends AppCompatActivity {
     public void ShowDeletePopup(View v, Category category) {
         Button btnClose;
         Button btnDelete;
+        TextView text;
         deleteDialog.setContentView(R.layout.delete_popup);
 
         btnClose = (Button) deleteDialog.findViewById(R.id.deletePopUpBNo);
         btnDelete = (Button) deleteDialog.findViewById(R.id.deletePopUpBYes);
+        text = (TextView) deleteDialog.findViewById(R.id.deletePopUpTVText);
+
+        text.setText("Do you really want to delete this category?");
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
 
@@ -257,18 +261,19 @@ public class CategoriesActivity extends AppCompatActivity {
         EditText categoryField;
         editDialog.setContentView(R.layout.categories_edit_popup);
 
-        btnEdit = (Button) editDialog.findViewById(R.id.editPopUpBYes);
-        btnClose = (Button) editDialog.findViewById(R.id.editPopUpBNo);
-        categoryField = (EditText) editDialog.findViewById(R.id.editPopUpETInput);
+        btnEdit = (Button) editDialog.findViewById(R.id.categoriesEditPopUpBYes);
+        btnClose = (Button) editDialog.findViewById(R.id.categoriesEditPopUpBNo);
+        categoryField = (EditText) editDialog.findViewById(R.id.categoriesEditPopUpETInput);
         categoryField.setText(category.getPlantCategory());
-        selectedCategory = category;
+        Category selectedCategory = category;
+//        selectedCategory = category;
 
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                EditText categoryField = (EditText) editDialog.findViewById(R.id.editPopUpETInput);
+                EditText categoryField = (EditText) editDialog.findViewById(R.id.categoriesEditPopUpETInput);
                 selectedCategory.setPlantCategory(categoryField.getText().toString());
                 editCategory(selectedCategory);
                 editDialog.dismiss();
