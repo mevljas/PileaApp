@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.example.pileaapp.R;
 import com.example.pileaapp.api.models.Location;
-import com.example.pileaapp.helpers.RecyclerViewAdapter;
+import com.example.pileaapp.helpers.categoryRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class LocationsActivity extends AppCompatActivity {
 
     List s1;
     public RecyclerView recyclerView;
-    public RecyclerViewAdapter myRecycleViewAdapter;
+    public categoryRecyclerViewAdapter recycleViewAdapter;
     public Context context = this;
 
     Dialog myDeleteDialog;
@@ -44,7 +44,7 @@ public class LocationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_locations);
         recyclerView = findViewById(R.id.locationsRVLocations);
 //        myRecycleViewAdapter = new RecyclerViewAdapter(this,s1);
-        recyclerView.setAdapter(myRecycleViewAdapter);
+        recyclerView.setAdapter(recycleViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         myDeleteDialog = new Dialog(this);
@@ -86,8 +86,8 @@ public class LocationsActivity extends AppCompatActivity {
 //                        }
 
 
-                        myRecycleViewAdapter = new RecyclerViewAdapter(context, list);
-                        recyclerView.setAdapter(myRecycleViewAdapter);
+                        recycleViewAdapter = new categoryRecyclerViewAdapter(context, list);
+                        recyclerView.setAdapter(recycleViewAdapter);
 
                         /*
                         for (String row: data) {
@@ -143,7 +143,7 @@ public class LocationsActivity extends AppCompatActivity {
         Button btnClose;
         Button btnDelete;
 
-        myEditDialog.setContentView(R.layout.edit_popup);
+        myEditDialog.setContentView(R.layout.locations_edit_popup);
 
         btnClose = (Button) myEditDialog.findViewById(R.id.editPopUpBNo);
         btnDelete = (Button) myEditDialog.findViewById(R.id.editPopUpBYes);

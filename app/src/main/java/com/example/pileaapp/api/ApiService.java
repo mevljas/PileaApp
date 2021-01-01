@@ -17,6 +17,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -39,6 +40,13 @@ public interface ApiService {
     Single<Category> createCategory(@Header("Authorization") String token,
                                     @Header("ApiKey") String apiKey,
                                     @Query("userId") String userId,
+                                    @Body Category categoryBody);
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @PUT("Category/{id}")
+    Single<Category> editCategory(@Path("id") int categoryID,
+                                  @Header("Authorization") String token,
+                                    @Header("ApiKey") String apiKey,
                                     @Body Category categoryBody);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})

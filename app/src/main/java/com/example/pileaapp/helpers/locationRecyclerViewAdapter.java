@@ -15,12 +15,12 @@ import com.example.pileaapp.api.models.Location;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class locationRecyclerViewAdapter extends RecyclerView.Adapter<locationRecyclerViewAdapter.MyViewHolder> {
 
     List data;
     Context context;
 
-    public RecyclerViewAdapter(Context ct, List s1){
+    public locationRecyclerViewAdapter(Context ct, List s1){
         this.context = ct;
         this.data = s1;
     }
@@ -30,7 +30,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.my_row,parent,false);
+        View view = inflater.inflate(R.layout.categories_row,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -55,7 +55,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            myText1 = itemView.findViewById(R.id.myRowTVName);
+            myText1 = itemView.findViewById(R.id.RowCategoryName);
         }
     }
 }
