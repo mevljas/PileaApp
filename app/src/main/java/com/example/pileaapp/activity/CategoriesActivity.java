@@ -11,11 +11,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pileaapp.R;
 import com.example.pileaapp.api.models.Category;
-import com.example.pileaapp.helpers.RecyclerViewAdapter;
+import com.example.pileaapp.helpers.categoryRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,32 +34,37 @@ public class CategoriesActivity extends AppCompatActivity {
 
     List s1;
     public RecyclerView recyclerView;
-    public RecyclerViewAdapter myRecycleViewAdapter;
+    public categoryRecyclerViewAdapter recycleViewAdapter;
     public Context context = this;
-    Dialog myDeleteDialog;
-    Dialog myEditDialog;
+    static Dialog deleteDialog;
+    static Dialog editDialog;
     CompositeDisposable compositeDisposable;
 
+
     private static final String TAG = CategoriesActivity.class.getSimpleName();
+
+    public static CategoriesActivity instance;    // Some objects require this.
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         setContentView(R.layout.activity_categories);
 
 
         s1 = new ArrayList();
         recyclerView = findViewById(R.id.categoriesRVCategories);
-        myRecycleViewAdapter = new RecyclerViewAdapter(this, s1);
-        recyclerView.setAdapter(myRecycleViewAdapter);
+        recycleViewAdapter = new categoryRecyclerViewAdapter(this, s1);
+        recyclerView.setAdapter(recycleViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
 //        showCategories(findViewById(android.R.id.content).getRootView());
 
 
-        myDeleteDialog = new Dialog(this);
-        myEditDialog = new Dialog(this);
+        deleteDialog = new Dialog(this);
+        editDialog = new Dialog(this);
 
 
     }
@@ -92,8 +99,8 @@ public class CategoriesActivity extends AppCompatActivity {
 //                        }
 
 
-                        myRecycleViewAdapter = new RecyclerViewAdapter(context, list);
-                        recyclerView.setAdapter(myRecycleViewAdapter);
+                        recycleViewAdapter = new categoryRecyclerViewAdapter(context, list);
+                        recyclerView.setAdapter(recycleViewAdapter);
 
                         /*
                         for (String row: data) {
@@ -113,6 +120,99 @@ public class CategoriesActivity extends AppCompatActivity {
                 });
     }
 
+    public void editCategory(Category selectedCategory)
+    {
+        compositeDisposable = new CompositeDisposable();
+
+
+
+        Single<Category> categorySingle = MainActivity.apiService.editCategory(selectedCategory.getCategoryID(), MainActivity.userLogin.getToken(), MainActivity.API_KEY, selectedCategory);
+        categorySingle.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Category>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        first we create a CompositeDisposable object which acts as a container for disposables
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(Category category) {
+                        // data is ready and we can update the UI
+                        Log.d(TAG, "SUCCESS");
+                        Log.d(TAG, "Category edited: " + category.getPlantCategory());
+
+                        //Toast
+                        Context context = getApplicationContext();
+                        CharSequence text = "Category edited.";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                        showCategories();
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // oops, we best show some error message
+                        Log.d(TAG, "ERROR: " + e.getMessage());
+                    }
+
+
+                });
+
+
+    }
+
+
+    public void deleteCategory(Category selectedCategory)
+    {
+        compositeDisposable = new CompositeDisposable();
+
+
+
+        Single<Category> categorySingle = MainActivity.apiService.deleteCategory(selectedCategory.getCategoryID(), MainActivity.userLogin.getToken(), MainActivity.API_KEY);
+        categorySingle.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Category>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        first we create a CompositeDisposable object which acts as a container for disposables
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(Category category) {
+                        // data is ready and we can update the UI
+                        Log.d(TAG, "SUCCESS");
+                        Log.d(TAG, "Category deleted: " + category.getPlantCategory());
+
+                        //Toast
+                        Context context = getApplicationContext();
+                        CharSequence text = "Category deleted.";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                        showCategories();
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // oops, we best show some error message
+                        Log.d(TAG, "ERROR: " + e.getMessage());
+                    }
+
+
+                });
+
+
+    }
+
 
 
     // Acitivity handeling functions
@@ -122,45 +222,72 @@ public class CategoriesActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void ShowDeletePopup(View v) {
+    public void ShowDeletePopup(View v, Category category) {
         Button btnClose;
         Button btnDelete;
         TextView text;
-        TextView category;
-        myDeleteDialog.setContentView(R.layout.delete_popup);
+        deleteDialog.setContentView(R.layout.delete_popup);
 
-        btnClose = (Button) myDeleteDialog.findViewById(R.id.deletePopUpBNo);
-        btnDelete = (Button) myDeleteDialog.findViewById(R.id.deletePopUpBYes);
+        btnClose = (Button) deleteDialog.findViewById(R.id.deletePopUpBNo);
+        btnDelete = (Button) deleteDialog.findViewById(R.id.deletePopUpBYes);
+        text = (TextView) deleteDialog.findViewById(R.id.deletePopUpTVText);
+
+        text.setText("Do you really want to delete this category?");
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                deleteCategory(category);
+                deleteDialog.dismiss();
+
+            }
+        });
 
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myDeleteDialog.dismiss();
+                deleteDialog.dismiss();
             }
         });
 
-        myDeleteDialog.show();
+        deleteDialog.show();
     }
 
-    public void ShowEditPopup(View v) {
+    public void ShowEditPopup(View v, Category category) {
         Button btnClose;
-        Button btnDelete;
-        TextView text;
-        TextView category;
-        myEditDialog.setContentView(R.layout.edit_popup);
+        Button btnEdit;
+        EditText categoryField;
+        editDialog.setContentView(R.layout.categories_edit_popup);
 
-        btnClose = (Button) myEditDialog.findViewById(R.id.editPopUpBNo);
-        btnDelete = (Button) myEditDialog.findViewById(R.id.editPopUpBYes);
+        btnEdit = (Button) editDialog.findViewById(R.id.categoriesEditPopUpBYes);
+        btnClose = (Button) editDialog.findViewById(R.id.categoriesEditPopUpBNo);
+        categoryField = (EditText) editDialog.findViewById(R.id.categoriesEditPopUpETInput);
+        categoryField.setText(category.getPlantCategory());
+        Category selectedCategory = category;
+//        selectedCategory = category;
+
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                EditText categoryField = (EditText) editDialog.findViewById(R.id.categoriesEditPopUpETInput);
+                selectedCategory.setPlantCategory(categoryField.getText().toString());
+                editCategory(selectedCategory);
+                editDialog.dismiss();
+            }
+        });
 
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myEditDialog.dismiss();
+                editDialog.dismiss();
             }
         });
-        myEditDialog.show();
+        editDialog.show();
     }
 
     @Override
