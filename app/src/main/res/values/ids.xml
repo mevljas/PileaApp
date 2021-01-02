@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="categoriesEditPopUpBYes" type="id" />
+    <item name="categoriesEditPopUpBNo" type="id" />
+    <item name="categoriesEditPopUpTVTitle" type="id" />
+    <item name="categoriesEditPopUpETInput" type="id" />
+</resources>
