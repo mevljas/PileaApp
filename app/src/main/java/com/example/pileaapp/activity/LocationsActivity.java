@@ -11,11 +11,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pileaapp.R;
 import com.example.pileaapp.api.models.Location;
-import com.example.pileaapp.helpers.RecyclerViewAdapter;
+import com.example.pileaapp.helpers.locationRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -30,13 +32,15 @@ public class LocationsActivity extends AppCompatActivity {
 
     List s1;
     public RecyclerView recyclerView;
-    public RecyclerViewAdapter myRecycleViewAdapter;
+    public locationRecyclerViewAdapter recycleViewAdapter;
     public Context context = this;
 
     Dialog myDeleteDialog;
     Dialog myEditDialog;
     CompositeDisposable compositeDisposable;
-    private static final String TAG = CategoriesActivity.class.getSimpleName();
+    private static final String TAG = LocationsActivity.class.getSimpleName();
+
+    public static LocationsActivity instance;    // Some objects require this.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +48,13 @@ public class LocationsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_locations);
         recyclerView = findViewById(R.id.locationsRVLocations);
 //        myRecycleViewAdapter = new RecyclerViewAdapter(this,s1);
-        recyclerView.setAdapter(myRecycleViewAdapter);
+        recyclerView.setAdapter(recycleViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         myDeleteDialog = new Dialog(this);
         myEditDialog = new Dialog(this);
 
-
+        instance = this;
 
     }
 
@@ -81,19 +85,10 @@ public class LocationsActivity extends AppCompatActivity {
                         Log.d(TAG, "SUCCESS");
                         List<Location> locations = list;
                         Log.d(TAG, "Number of locations received: " + locations.size());
-//                        for (Category category: categories) {
-//                            System.out.println(category.getPlantCategory());
-//                        }
 
 
-                        myRecycleViewAdapter = new RecyclerViewAdapter(context, list);
-                        recyclerView.setAdapter(myRecycleViewAdapter);
-
-                        /*
-                        for (String row: data) {
-                            String currentText = categories.getText().toString();
-                            categories.setText(currentText + "\n\n" + row);
-                        }*/
+                        recycleViewAdapter = new locationRecyclerViewAdapter(context, list);
+                        recyclerView.setAdapter(recycleViewAdapter);
 
                     }
 
@@ -107,6 +102,99 @@ public class LocationsActivity extends AppCompatActivity {
                 });
     }
 
+    public void editLocation(Location selectedLocation)
+    {
+        compositeDisposable = new CompositeDisposable();
+
+
+
+        Single<Location> locationSingle = MainActivity.apiService.editLocation(selectedLocation.getLocationID(), MainActivity.userLogin.getToken(), MainActivity.API_KEY, selectedLocation);
+        locationSingle.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Location>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        first we create a CompositeDisposable object which acts as a container for disposables
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(Location location) {
+                        // data is ready and we can update the UI
+                        Log.d(TAG, "SUCCESS");
+                        Log.d(TAG, "Location edited: " + location.getName());
+
+                        //Toast
+                        Context context = getApplicationContext();
+                        CharSequence text = "Location edited.";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                        showLocations();
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // oops, we best show some error message
+                        Log.d(TAG, "ERROR: " + e.getMessage());
+                    }
+
+
+                });
+
+
+    }
+
+
+    public void deletelocation(Location selectedLocation)
+    {
+        compositeDisposable = new CompositeDisposable();
+
+
+
+        Single<Location> locationSingle = MainActivity.apiService.deleteLocation(selectedLocation.getLocationID(), MainActivity.userLogin.getToken(), MainActivity.API_KEY);
+        locationSingle.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Location>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        first we create a CompositeDisposable object which acts as a container for disposables
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(Location location) {
+                        // data is ready and we can update the UI
+                        Log.d(TAG, "SUCCESS");
+                        Log.d(TAG, "Location deleted: " + location.getName());
+
+                        //Toast
+                        Context context = getApplicationContext();
+                        CharSequence text = "Location deleted.";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                        showLocations();
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // oops, we best show some error message
+                        Log.d(TAG, "ERROR: " + e.getMessage());
+                    }
+
+
+                });
+
+
+    }
+
 
 
     // Acitivity handeling functions
@@ -115,7 +203,7 @@ public class LocationsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void ShowDeletePopup(View v){
+    public void ShowDeletePopup(View v, Location location){
         Button btnClose;
         Button btnDelete;
         TextView text;
@@ -127,26 +215,59 @@ public class LocationsActivity extends AppCompatActivity {
 
         text.setText("Do you really want to delete this location?");
 
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                deletelocation(location);
+                myDeleteDialog.dismiss();
+
+            }
+        });
+
 
 
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                deletelocation(location);
                 myDeleteDialog.dismiss();
+                showLocations();
             }
         });
 
         myDeleteDialog.show();
     }
 
-    public void ShowEditPopup(View v){
+    public void ShowEditPopup(View v, Location location){
         Button btnClose;
-        Button btnDelete;
+        Button btnEdit;
+        EditText nameField, descriptionField;
 
-        myEditDialog.setContentView(R.layout.edit_popup);
+        myEditDialog.setContentView(R.layout.locations_edit_popup);
 
-        btnClose = (Button) myEditDialog.findViewById(R.id.editPopUpBNo);
-        btnDelete = (Button) myEditDialog.findViewById(R.id.editPopUpBYes);
+        btnClose = (Button) myEditDialog.findViewById(R.id.locationsEditPopUpBNo);
+        btnEdit = (Button) myEditDialog.findViewById(R.id.locationsEditPopUpBYes);
+        nameField = (EditText) myEditDialog.findViewById(R.id.locationsEditPopUpETInput);
+        descriptionField = (EditText) myEditDialog.findViewById(R.id.locationsEditPopUpETDescription);
+
+        nameField.setText(location.getName());
+        descriptionField.setText(location.getDescription());
+        Location selectedLocation = location;
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                EditText nameField = (EditText) myEditDialog.findViewById(R.id.locationsEditPopUpETInput);
+                EditText descriptionField = (EditText) myEditDialog.findViewById(R.id.locationsEditPopUpETDescription);
+                selectedLocation.setName(nameField.getText().toString());
+                selectedLocation.setDescription(descriptionField.getText().toString());
+                editLocation(selectedLocation);
+                myEditDialog.dismiss();
+
+            }
+        });
 
 
         btnClose.setOnClickListener(new View.OnClickListener() {
