@@ -131,7 +131,7 @@ public class LocationsActivity extends AppCompatActivity {
 
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
-
+                        showLocations();
 
 
                     }
@@ -178,7 +178,7 @@ public class LocationsActivity extends AppCompatActivity {
 
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
-
+                        showLocations();
 
 
                     }
@@ -221,7 +221,7 @@ public class LocationsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 deletelocation(location);
                 myDeleteDialog.dismiss();
-                showLocations();
+
             }
         });
 
@@ -265,7 +265,7 @@ public class LocationsActivity extends AppCompatActivity {
                 selectedLocation.setDescription(descriptionField.getText().toString());
                 editLocation(selectedLocation);
                 myEditDialog.dismiss();
-                showLocations();
+
             }
         });
 

@@ -149,7 +149,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
-
+                        showCategories();
 
 
                     }
@@ -196,7 +196,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
-
+                        showCategories();
 
 
                     }
@@ -240,7 +240,7 @@ public class CategoriesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 deleteCategory(category);
                 deleteDialog.dismiss();
-                showCategories();
+
             }
         });
 
@@ -277,7 +277,6 @@ public class CategoriesActivity extends AppCompatActivity {
                 selectedCategory.setPlantCategory(categoryField.getText().toString());
                 editCategory(selectedCategory);
                 editDialog.dismiss();
-                showCategories();
             }
         });
 
