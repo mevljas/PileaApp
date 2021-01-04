@@ -11,12 +11,14 @@ import io.reactivex.Single;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -42,6 +44,20 @@ public interface ApiService {
                                     @Body Category categoryBody);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @PUT("Category/{id}")
+    Single<Category> editCategory(@Path("id") int categoryID,
+                                  @Header("Authorization") String token,
+                                    @Header("ApiKey") String apiKey,
+                                    @Body Category categoryBody);
+
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @DELETE("Category/{id}")
+    Single<Category> deleteCategory(@Path("id") int categoryID,
+                                    @Header("Authorization") String token,
+                                  @Header("ApiKey") String apiKey);
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @POST("Authenticate/register")
     Single<Register> register(@Header("ApiKey") String apiKey,
                                     @Body Register registerBody);
@@ -63,4 +79,18 @@ public interface ApiService {
                                     @Header("ApiKey") String apiKey,
                                     @Query("userId") String userId,
                                     @Body Location locationBody);
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @PUT("Location/{id}")
+    Single<Location> editLocation(@Path("id") int locationID,
+                                  @Header("Authorization") String token,
+                                  @Header("ApiKey") String apiKey,
+                                  @Body Location locationBody);
+
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @DELETE("Location/{id}")
+    Single<Location> deleteLocation(@Path("id") int locationID,
+                                    @Header("Authorization") String token,
+                                    @Header("ApiKey") String apiKey);
 }

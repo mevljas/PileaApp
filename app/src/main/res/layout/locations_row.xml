@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
         app:cardBackgroundColor="#679198"
-        app:layout_constraintBottom_toTopOf="@+id/myRowTVName"
+        app:layout_constraintBottom_toTopOf="@+id/RowCategoryName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,7 +24,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/myRowTVName"
+        android:id="@+id/RowLocationName"
         android:layout_width="142dp"
         android:layout_height="63dp"
         android:layout_marginStart="24dp"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/myRowIBDelete"
+        android:id="@+id/rowLocationDelete"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginTop="24dp"
@@ -45,20 +45,18 @@
         android:scaleX="1.5"
         android:scaleY="1.5"
         android:tint="#53787E"
-        android:onClick="ShowDeletePopup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_delete" />
 
     <ImageView
-        android:id="@+id/myRowIBEdit"
+        android:id="@+id/rowLocationEdit"
         android:layout_width="35dp"
         android:layout_height="39dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="12dp"
         android:background="@null"
-        android:onClick="ShowEditPopup"
-        app:layout_constraintEnd_toStartOf="@+id/myRowIBDelete"
+        app:layout_constraintEnd_toStartOf="@+id/rowLocationDelete"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_edit"
         app:tint="#53787E" />
