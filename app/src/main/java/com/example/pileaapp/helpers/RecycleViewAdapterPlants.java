@@ -4,20 +4,28 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pileaapp.R;
-import com.example.pileaapp.api.models.Category;
-import com.example.pileaapp.api.models.Location;
+
+
+import com.example.pileaapp.activity.CategoriesActivity;
+import com.example.pileaapp.activity.PlantsActivity;
+import com.example.pileaapp.api.models.Plant;
 
 import java.util.List;
 
+import static com.example.pileaapp.activity.PlantsActivity.instance;
+
+
 public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAdapterPlants.MyViewHolder> {
 
-    List data;
+    List<Plant> data;
     Context context;
 
     public RecycleViewAdapterPlants(Context ct, List s1){
@@ -36,11 +44,18 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-//        TODO: this has to be done differently for different object types. This is just a temporary fix.
-        if (data.get(position) instanceof Category)
-            holder.myText1.setText(((Category) data.get(position)).getPlantCategory());
-        else if (data.get(position) instanceof Location)
-            holder.myText1.setText(((Location) data.get(position)).getName());
+
+        holder.myText1.setText(((Plant) data.get(position)).getName());
+
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick( View view) {
+                System.out.println("Instance" +instance+"   ");
+                instance.ShowDeletePopup(view, data.get(position));
+            }
+        });
+
+
 
 
     }
@@ -52,10 +67,13 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView myText1;
+        ImageButton deleteButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             myText1 = itemView.findViewById(R.id.plantsTVName);
+            //editButton = (ImageView) itemView.findViewById(R.id.plantsIBClose);
+            deleteButton = (ImageButton) itemView.findViewById(R.id.plantsIBClose);
         }
     }
 }
