@@ -5,10 +5,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.pileaapp.R;
+import com.example.pileaapp.addPlantActivity;
 import com.example.pileaapp.api.models.Category;
 import com.example.pileaapp.helpers.RecycleViewAdapterPlants;
 
@@ -91,4 +94,10 @@ public class PlantsActivity extends AppCompatActivity {
                 });
     }
 
+    //Open AddPlant Activity
+    public void AddPlantAcitivty (View view) {
+        Intent intent = new Intent(this, addPlantActivity.class);
+        startActivity(intent);
+
+    }
 }
