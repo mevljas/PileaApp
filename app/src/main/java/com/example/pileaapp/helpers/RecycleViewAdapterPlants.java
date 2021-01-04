@@ -30,7 +30,7 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recycleview_item_row,parent,false);
+        View view = inflater.inflate(R.layout.my_card,parent,false);
         return new MyViewHolder(view);
     }
 
