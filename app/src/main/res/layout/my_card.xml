@@ -7,17 +7,25 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview"
-        android:layout_width="175dp"
-        android:layout_height="251dp"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="4dp"
         app:cardElevation="3dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="189dp"
+            android:layout_height="269dp"
             android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/plantsIBClose"
+                android:layout_width="32dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:background="@null"
+                app:srcCompat="@drawable/ic_close" />
 
             <ImageView
                 android:id="@+id/plantsIVImage"
