@@ -40,7 +40,7 @@
         app:tint="#4C7177" />
 
     <TextView
-        android:id="@+id/registerTVEmail"
+        android:id="@+id/addPlantTVName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
@@ -62,7 +62,7 @@
         app:layout_constraintTop_toBottomOf="@+id/registerETPassword" />
 
     <TextView
-        android:id="@+id/registerTVPassword"
+        android:id="@+id/addPlantTVDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
@@ -70,7 +70,7 @@
         android:text="Password"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerETEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/addPlantETName" />
 
     <EditText
         android:id="@+id/registerETPassword"
@@ -83,7 +83,7 @@
         android:inputType="textPassword"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerTVPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/addPlantTVDescription" />
 
     <EditText
         android:id="@+id/registerETPasswordConfirm"
@@ -99,7 +99,7 @@
         app:layout_constraintTop_toBottomOf="@+id/registerTVPasswordConfirm" />
 
     <Button
-        android:id="@+id/registerBRegister"
+        android:id="@+id/raddButtonBAdd"
         android:layout_width="330dp"
         android:layout_height="73dp"
         android:layout_marginTop="24dp"
@@ -113,7 +113,7 @@
         app:layout_constraintTop_toBottomOf="@+id/registerETPasswordConfirm" />
 
     <EditText
-        android:id="@+id/registerETEmail"
+        android:id="@+id/addPlantETName"
         android:layout_width="334dp"
         android:layout_height="54dp"
         android:layout_marginStart="36dp"
@@ -123,5 +123,5 @@
         android:inputType="textEmailAddress"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerTVEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/addPlantTVName" />
 </androidx.constraintlayout.widget.ConstraintLayout>
