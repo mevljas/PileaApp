@@ -13,6 +13,7 @@ import android.view.View;
 import com.example.pileaapp.R;
 import com.example.pileaapp.addPlantActivity;
 import com.example.pileaapp.api.models.Category;
+import com.example.pileaapp.api.models.Plant;
 import com.example.pileaapp.helpers.RecycleViewAdapterPlants;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class PlantsActivity extends AppCompatActivity {
     public Context context = this;
 
     CompositeDisposable compositeDisposable;
-    private static final String TAG = CategoriesActivity.class.getSimpleName();
+    private static final String TAG = PlantsActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +47,13 @@ public class PlantsActivity extends AppCompatActivity {
         myRecycleViewAdapter = new RecycleViewAdapterPlants(this, s1);
         recyclerView.setAdapter(myRecycleViewAdapter);
 
-        showCategories();
+        showPlants();
     }
 
-    public void showCategories() {
+    public void showPlants() {
         compositeDisposable = new CompositeDisposable();
 //       Make a request by calling the corresponding method
-        Single<List<Category>> list = MainActivity.apiService.getUserCategories(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID());
+        Single<List<Plant>> list = MainActivity.apiService.getUserPlants(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID());
         list.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<List>() {
@@ -66,8 +67,8 @@ public class PlantsActivity extends AppCompatActivity {
                     public void onSuccess(List list) {
                         // data is ready and we can update the UI
                         Log.d(TAG, "SUCCESS");
-                        List<Category> categories = list;
-                        Log.d(TAG, "Number of categories received: " + categories.size());
+                        List<Plant> plants = list;
+                        Log.d(TAG, "Number of plants received: " + plants.size());
 //                        for (Category category: categories) {
 //                            System.out.println(category.getPlantCategory());
 //                        }

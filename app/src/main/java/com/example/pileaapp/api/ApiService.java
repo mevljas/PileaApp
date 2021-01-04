@@ -3,6 +3,7 @@ package com.example.pileaapp.api;
 import com.example.pileaapp.api.models.Category;
 import com.example.pileaapp.api.models.Location;
 import com.example.pileaapp.api.models.Login;
+import com.example.pileaapp.api.models.Plant;
 import com.example.pileaapp.api.models.Register;
 
 import java.util.List;
@@ -93,4 +94,39 @@ public interface ApiService {
     Single<Location> deleteLocation(@Path("id") int locationID,
                                     @Header("Authorization") String token,
                                     @Header("ApiKey") String apiKey);
+
+
+    ////Plants
+
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @GET("Plant")
+    Single<List<Plant>> getUserPlants(@Header("Authorization") String token,
+                                          @Header("ApiKey") String apiKey,
+                                          @Query("userId") String userId);
+
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @POST("Plant")
+    Single<Plant> createPlant(@Header("Authorization") String token,
+                                    @Header("ApiKey") String apiKey,
+                                    @Query("userId") String userId,
+                                    @Query("categoryId") String categoryId,
+                                    @Query("locationId") String locationId,
+                                    @Body Plant plantBody);
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @PUT("Plant/{id}")
+    Single<Plant> editPlant(@Path("id") int plantID,
+                                  @Header("Authorization") String token,
+                                  @Header("ApiKey") String apiKey,
+                                  @Body Plant plantBody);
+
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @DELETE("Plant/{id}")
+    Single<Plant> deletePlant(@Path("id") int plantID,
+                                    @Header("Authorization") String token,
+                                    @Header("ApiKey") String apiKey);
+
 }
