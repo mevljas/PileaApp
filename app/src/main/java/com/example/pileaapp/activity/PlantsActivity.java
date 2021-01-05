@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ public class PlantsActivity extends AppCompatActivity {
     private static final String TAG = PlantsActivity.class.getSimpleName();
 
     static Dialog deleteDialog;
+    static Dialog myEditDialog;
 
     public static PlantsActivity instance;    // Some objects require this.
 
@@ -61,6 +64,7 @@ public class PlantsActivity extends AppCompatActivity {
 
 
         deleteDialog = new Dialog(this);
+        myEditDialog = new Dialog(this);
 
     }
 
@@ -91,7 +95,6 @@ public class PlantsActivity extends AppCompatActivity {
                         Log.d(TAG, "Number of plants received: " + plants.size());
 
 
-
                         myRecycleViewAdapter = new RecycleViewAdapterPlants(context, list);
                         recyclerView.setAdapter(myRecycleViewAdapter);
 
@@ -109,7 +112,7 @@ public class PlantsActivity extends AppCompatActivity {
     }
 
     //Open AddPlant Activity
-    public void AddPlantAcitivty (View view) {
+    public void AddPlantAcitivty(View view) {
         Intent intent = new Intent(this, addPlantActivity.class);
         startActivity(intent);
 
@@ -154,7 +157,6 @@ public class PlantsActivity extends AppCompatActivity {
         compositeDisposable = new CompositeDisposable();
 
 
-
         Single<Plant> plantSingle = MainActivity.apiService.deletePlant(selectedPlant.getPlantID(), MainActivity.userLogin.getToken(), MainActivity.API_KEY);
         plantSingle.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -193,5 +195,116 @@ public class PlantsActivity extends AppCompatActivity {
                 });
 
 
+    }
+
+    public void editPlant(Plant selectedPlant) {
+        compositeDisposable = new CompositeDisposable();
+
+
+        Single<Plant> plantSingle = MainActivity.apiService.editPlant(selectedPlant.getPlantID(), MainActivity.userLogin.getToken(), MainActivity.API_KEY, selectedPlant);
+        plantSingle.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Plant>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        first we create a CompositeDisposable object which acts as a container for disposables
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(Plant plant) {
+                        // data is ready and we can update the UI
+                        Log.d(TAG, "SUCCESS");
+                        Log.d(TAG, "Plant edited: " + plant.getName());
+
+                        //Toast
+                        Context context = getApplicationContext();
+                        CharSequence text = "Plant edited.";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                        showPlants();
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // oops, we best show some error message
+                        Log.d(TAG, "ERROR: " + e.getMessage());
+                    }
+
+                });
+
+
+    }
+
+    public void ShowEditPopup(View v, Plant plant) {
+        Button btnClose;
+        Button btnEdit;
+        EditText nameField, descriptionField, noteField, dateField;
+        Spinner daysBetweenWateringField, categoriesField, locationsField;
+
+
+        myEditDialog.setContentView(R.layout.plant_edit_popup);
+        System.out.println("helo edit");
+
+
+        btnEdit = (Button) myEditDialog.findViewById(R.id.editPlantUpBYes);
+        btnClose = (Button) myEditDialog.findViewById(R.id.editPlantUpBNo);
+
+
+        nameField = (EditText) myEditDialog.findViewById(R.id.editPlantETName);
+        noteField = (EditText) myEditDialog.findViewById(R.id.editPlantETNote);
+        descriptionField = (EditText) myEditDialog.findViewById(R.id.editPlantETDescription);
+        dateField = (EditText) myEditDialog.findViewById(R.id.editPlantETDate);
+
+        daysBetweenWateringField = (Spinner) myEditDialog.findViewById(R.id.editPlantSDaysBetween);
+        locationsField = (Spinner) myEditDialog.findViewById(R.id.editPlantSLocation);
+        categoriesField = (Spinner) myEditDialog.findViewById(R.id.editPlantSCategories);
+
+        nameField.setText(plant.getName());
+        descriptionField.setText(plant.getDescription());
+        Plant selectedPlant = plant;
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                System.out.println("helooo");
+
+                EditText nameField = (EditText) myEditDialog.findViewById(R.id.editPlantETName);
+                EditText noteField = (EditText) myEditDialog.findViewById(R.id.editPlantETNote);
+                EditText descriptionField = (EditText) myEditDialog.findViewById(R.id.editPlantETDescription);
+                EditText dateField = (EditText) myEditDialog.findViewById(R.id.editPlantETDate);
+
+                Spinner daysBetweenWateringField = (Spinner) myEditDialog.findViewById(R.id.editPlantSDaysBetween);
+                Spinner locationsField = (Spinner) myEditDialog.findViewById(R.id.editPlantSLocation);
+                Spinner categoriesField = (Spinner) myEditDialog.findViewById(R.id.editPlantSCategories);
+
+                selectedPlant.setName(nameField.getText().toString());
+                selectedPlant.setDescription(descriptionField.getText().toString());
+                selectedPlant.setNote(noteField.getText().toString());
+/*
+                //Not oki doki! TODO
+                selectedPlant.setLastWateredDate(dateField.getText().toString());
+                selectedPlant.setNextWateredDate(selectedPlant.getLastWateredDate() + Integer.parseInt(daysBetweenWateringField.toString()));
+
+                selectedPlant.setDaysBetweenWatering(Integer.parseInt(daysBetweenWateringField.toString()));*/
+
+                //Problematidni TODO
+                //selectedPlant.setLocation();
+                //selectedPlant.setCategory();
+
+
+
+
+                editPlant(selectedPlant);
+                myEditDialog.dismiss();
+
+            }
+        });
+
+        myEditDialog.show();
     }
 }
