@@ -15,6 +15,7 @@ import com.example.pileaapp.R;
 
 
 import com.example.pileaapp.activity.CategoriesActivity;
+import com.example.pileaapp.activity.LocationsActivity;
 import com.example.pileaapp.activity.PlantsActivity;
 import com.example.pileaapp.api.models.Plant;
 
@@ -55,6 +56,13 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
             }
         });
 
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PlantsActivity.instance.ShowEditPopup(view, data.get(position));
+            }
+        });
+
 
 
 
@@ -68,11 +76,12 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView myText1;
         ImageButton deleteButton;
+        ImageButton editButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             myText1 = itemView.findViewById(R.id.plantsTVName);
-            //editButton = (ImageView) itemView.findViewById(R.id.plantsIBClose);
+            editButton = (ImageButton) itemView.findViewById(R.id.plantsIBWater);
             deleteButton = (ImageButton) itemView.findViewById(R.id.plantsIBClose);
         }
     }
