@@ -111,8 +111,8 @@ public interface ApiService {
     Single<Plant> createPlant(@Header("Authorization") String token,
                                     @Header("ApiKey") String apiKey,
                                     @Query("userId") String userId,
-                                    @Query("categoryId") String categoryId,
-                                    @Query("locationId") String locationId,
+                                    @Query("categoryId") int categoryId,
+                                    @Query("locationId") int locationId,
                                     @Body Plant plantBody);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})

@@ -64,8 +64,8 @@ public class LocationsActivity extends AppCompatActivity {
         showLocations();
     }
 
-    public void showLocations() {
 
+    public void showLocations() {
 
         compositeDisposable = new CompositeDisposable();
 //       Make a request by calling the corresponding method

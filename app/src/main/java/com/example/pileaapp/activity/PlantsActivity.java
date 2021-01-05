@@ -112,8 +112,8 @@ public class PlantsActivity extends AppCompatActivity {
     }
 
     //Open AddPlant Activity
-    public void AddPlantAcitivty(View view) {
-        Intent intent = new Intent(this, addPlantActivity.class);
+    public void AddPlantAcitivty (View view) {
+        Intent intent = new Intent(this, AddPlantActivity.class);
         startActivity(intent);
 
     }
