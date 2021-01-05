@@ -17,6 +17,7 @@ import com.example.pileaapp.api.models.Category;
 import com.example.pileaapp.api.models.Location;
 import com.example.pileaapp.api.models.Plant;
 import com.example.pileaapp.helpers.categoryRecyclerViewAdapter;
+import com.example.pileaapp.helpers.locationRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ public class AddPlantActivity extends AppCompatActivity {
     private Spinner categoryInput;
     private Spinner locationInput;
     private ArrayAdapter<Category> categoriesAdapter;
+    private ArrayAdapter<Location> locationsAdapter;
     private  AddPlantActivity instance;
 
     CompositeDisposable compositeDisposable;
@@ -68,6 +70,7 @@ public class AddPlantActivity extends AppCompatActivity {
     protected void onPostResume() {
         super.onPostResume();
         getCategories();
+        getLocations();
     }
 
     public void getCategories() {
@@ -93,6 +96,43 @@ public class AddPlantActivity extends AppCompatActivity {
 
                         categoriesAdapter = new ArrayAdapter<Category>(instance, android.R.layout.simple_spinner_item, categories);
                         categoryInput.setAdapter(categoriesAdapter);
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // oops, we best show some error message
+                        Log.d(TAG, "ERROR: " + e.getMessage());
+                    }
+
+
+                });
+    }
+
+    public void getLocations() {
+
+        compositeDisposable = new CompositeDisposable();
+//       Make a request by calling the corresponding method
+        Single<List<Location>> list = MainActivity.apiService.getUserLocations(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID());
+        list.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        first we create a CompositeDisposable object which acts as a container for disposables
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(List list) {
+                        // data is ready and we can update the UI
+                        Log.d(TAG, "SUCCESS");
+                        List<Location> locations = list;
+                        Log.d(TAG, "Number of locations received: " + locations.size());
+
+
+                        locationsAdapter = new ArrayAdapter<Location>(instance, android.R.layout.simple_spinner_item, locations);
+                        locationInput.setAdapter(locationsAdapter);
 
                     }
 

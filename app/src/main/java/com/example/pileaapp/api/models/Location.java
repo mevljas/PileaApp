@@ -60,4 +60,9 @@ public class Location {
     public void setUser(Object user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }
