@@ -14,6 +14,9 @@ import com.example.pileaapp.R;
 import com.example.pileaapp.api.ApiService;
 import com.example.pileaapp.api.models.Login;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -69,9 +72,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeApi(){
 
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .build();
+
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://pilea-web-dev.azurewebsites.net/api/")
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
