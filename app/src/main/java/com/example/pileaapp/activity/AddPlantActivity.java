@@ -1,14 +1,17 @@
 package com.example.pileaapp.activity;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.icu.util.GregorianCalendar;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -18,13 +21,16 @@ import com.example.pileaapp.R;
 import com.example.pileaapp.api.models.Category;
 import com.example.pileaapp.api.models.Location;
 import com.example.pileaapp.api.models.Plant;
-import com.example.pileaapp.helpers.categoryRecyclerViewAdapter;
-import com.example.pileaapp.helpers.locationRecyclerViewAdapter;
 
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import io.reactivex.Single;
@@ -36,7 +42,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AddPlantActivity extends AppCompatActivity {
 
-    private TextView status;
     private EditText nameInput;
     private EditText noteInput;
     private Spinner daysBetweenWateringInput;
@@ -47,6 +52,11 @@ public class AddPlantActivity extends AppCompatActivity {
     private ArrayAdapter<Category> categoriesAdapter;
     private ArrayAdapter<Location> locationsAdapter;
     private  AddPlantActivity instance;
+    private int mYear, mMonth, mDay;
+    private Date selectedDate;
+    Calendar c;
+
+
 
     CompositeDisposable compositeDisposable;
     private static final String TAG = AddPlantActivity.class.getSimpleName();
@@ -55,8 +65,8 @@ public class AddPlantActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "HALO");
         setContentView(R.layout.activity_add_plant);
+        instance = this;
 
         nameInput = (EditText) findViewById(R.id.addPlantETName);
         noteInput = (EditText) findViewById(R.id.addPlantETNote);
@@ -65,7 +75,6 @@ public class AddPlantActivity extends AppCompatActivity {
         descriptionInput = (EditText) findViewById(R.id.addPlantETDescription);
         categoryInput = (Spinner) findViewById(R.id.addPlantSCategory);
         locationInput = (Spinner) findViewById(R.id.addPlantSLocation);
-        status = (TextView) findViewById(R.id.addCategoryTVStatus);
 
         instance = this;
         List<Integer> numbers = Stream.iterate(1, n -> n + 1)
@@ -74,6 +83,65 @@ public class AddPlantActivity extends AppCompatActivity {
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, numbers);
         daysBetweenWateringInput.setAdapter(adapter);
 
+        // Get Current Date
+        c = Calendar.getInstance();
+        SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+       selectedDate = c.getTime();
+
+        lastWateringDateInput.setText(dateOnly.format(c.getTime()));
+
+        lastWateringDateInput.setInputType(InputType.TYPE_NULL);
+        lastWateringDateInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker();
+            }
+        });
+        lastWateringDateInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    showDatePicker();
+                }
+            }
+        });
+
+
+
+
+
+    }
+
+
+    public void showDatePicker() {
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(instance,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+
+                        try {
+                            selectedDate = new SimpleDateFormat("yyyy-M-d").parse(year +"-" +(monthOfYear+1) + "-" + dayOfMonth);
+                            System.out.println(year +"-" +(monthOfYear+1) + "-" + dayOfMonth);
+                            SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+                            lastWateringDateInput.setText(dateOnly.format(selectedDate.getTime()));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, mYear, mMonth, mDay);
+
+        datePickerDialog.getDatePicker().setMinDate(selectedDate.getTime() - 10000000000l);
+        datePickerDialog.getDatePicker().setMaxDate(selectedDate.getTime());
+        datePickerDialog.show();
     }
 
     @Override
@@ -155,21 +223,31 @@ public class AddPlantActivity extends AppCompatActivity {
                 });
     }
 
-    public void addCategory(View view)
+    public void addPlant(View view)
     {
         compositeDisposable = new CompositeDisposable();
-        this.status.setText("Posting");
 
         Plant plantBody = new Plant();
+        plantBody.setName(nameInput.getText().toString());
+        plantBody.setNote(noteInput.getText().toString());
         Category category = (Category) categoryInput.getSelectedItem();
-        plantBody.setCategory(category);
-        plantBody.setDaysBetweenWatering((Integer) daysBetweenWateringInput.getSelectedItem());
         plantBody.setDescription(descriptionInput.getText().toString());
-//        plantBody.setImage();
+////        plantBody.setImage();
         plantBody.setLastWateredDate(lastWateringDateInput.getText().toString());
+        plantBody.setDaysBetweenWatering((Integer) daysBetweenWateringInput.getSelectedItem());
+
         Location location = (Location) locationInput.getSelectedItem();
-        plantBody.setLocation(location);
-//        plantBody.setNextWateredDate(lastWateringDate.getText().toString() + (Integer) daysBetweenWatering.getSelectedItem());
+//
+        c = Calendar.getInstance();
+        c.setTime(selectedDate);
+
+        // manipulate date
+        c.add(Calendar.DAY_OF_MONTH, (Integer) daysBetweenWateringInput.getSelectedItem());
+
+        // convert calendar to date
+        SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+        selectedDate = c.getTime();
+        plantBody.setNextWateredDate(dateOnly.format(selectedDate.getTime()));
 
 
         Single<Plant> plantSingle = MainActivity.apiService.createPlant(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID(), category.getCategoryID(), location.getLocationID(), plantBody);
@@ -187,7 +265,6 @@ public class AddPlantActivity extends AppCompatActivity {
                         // data is ready and we can update the UI
                         Log.d(TAG, "SUCCESS");
                         Log.d(TAG, " created: " + plant.getName());
-                        status.setText("Plant created: " + plant.getName());
 
                         //Toast
                         Context context = getApplicationContext();
@@ -204,7 +281,6 @@ public class AddPlantActivity extends AppCompatActivity {
                     public void onError(Throwable e) {
                         // oops, we best show some error message
                         Log.d(TAG, "ERROR: " + e.getMessage());
-                        status.setText("ERROR: " + e.getMessage());
                     }
 
 
@@ -212,4 +288,7 @@ public class AddPlantActivity extends AppCompatActivity {
 
 
     }
+
+
+
 }
