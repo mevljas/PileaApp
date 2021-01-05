@@ -1,6 +1,7 @@
 package com.example.pileaapp.activity;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pileaapp.R;
@@ -21,6 +23,9 @@ import com.example.pileaapp.helpers.locationRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
@@ -46,6 +51,7 @@ public class AddPlantActivity extends AppCompatActivity {
     CompositeDisposable compositeDisposable;
     private static final String TAG = AddPlantActivity.class.getSimpleName();
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +68,11 @@ public class AddPlantActivity extends AppCompatActivity {
         status = (TextView) findViewById(R.id.addCategoryTVStatus);
 
         instance = this;
-        Log.d(TAG, "DELA");
+        List<Integer> numbers = Stream.iterate(1, n -> n + 1)
+                .limit(30)
+                .collect(Collectors.toList());
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, numbers);
+        daysBetweenWateringInput.setAdapter(adapter);
 
     }
 
@@ -74,7 +84,6 @@ public class AddPlantActivity extends AppCompatActivity {
     }
 
     public void getCategories() {
-        Log.d(TAG, "TESTSTTST");
         compositeDisposable = new CompositeDisposable();
 //       Make a request by calling the corresponding method
         Single<List<Category>> list = MainActivity.apiService.getUserCategories(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID());
