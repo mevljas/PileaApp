@@ -48,4 +48,9 @@ public class Category {
     public void setUser(Object user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return this.getPlantCategory();
+    }
 }

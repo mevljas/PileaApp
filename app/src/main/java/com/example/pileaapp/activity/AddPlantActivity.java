@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -15,6 +16,10 @@ import com.example.pileaapp.R;
 import com.example.pileaapp.api.models.Category;
 import com.example.pileaapp.api.models.Location;
 import com.example.pileaapp.api.models.Plant;
+import com.example.pileaapp.helpers.categoryRecyclerViewAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
@@ -33,6 +38,8 @@ public class AddPlantActivity extends AppCompatActivity {
     private EditText descriptionInput;
     private Spinner categoryInput;
     private Spinner locationInput;
+    private ArrayAdapter<Category> categoriesAdapter;
+    private  AddPlantActivity instance;
 
     CompositeDisposable compositeDisposable;
     private static final String TAG = AddPlantActivity.class.getSimpleName();
@@ -40,7 +47,8 @@ public class AddPlantActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_category);
+        Log.d(TAG, "HALO");
+        setContentView(R.layout.activity_add_plant);
 
         nameInput = (EditText) findViewById(R.id.addPlantETName);
         noteInput = (EditText) findViewById(R.id.addPlantETNote);
@@ -50,6 +58,52 @@ public class AddPlantActivity extends AppCompatActivity {
         categoryInput = (Spinner) findViewById(R.id.addPlantSCategory);
         locationInput = (Spinner) findViewById(R.id.addPlantSLocation);
         status = (TextView) findViewById(R.id.addCategoryTVStatus);
+
+        instance = this;
+        Log.d(TAG, "DELA");
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        getCategories();
+    }
+
+    public void getCategories() {
+        Log.d(TAG, "TESTSTTST");
+        compositeDisposable = new CompositeDisposable();
+//       Make a request by calling the corresponding method
+        Single<List<Category>> list = MainActivity.apiService.getUserCategories(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID());
+        list.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        first we create a CompositeDisposable object which acts as a container for disposables
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(List list) {
+                        // data is ready and we can update the UI
+                        Log.d(TAG, "SUCCESS");
+                        List<Category> categories =  list;
+                        Log.d(TAG, "Number of categories received: " + categories.size());
+
+                        categoriesAdapter = new ArrayAdapter<Category>(instance, android.R.layout.simple_spinner_item, categories);
+                        categoryInput.setAdapter(categoriesAdapter);
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // oops, we best show some error message
+                        Log.d(TAG, "ERROR: " + e.getMessage());
+                    }
+
+
+                });
     }
 
     public void addCategory(View view)
