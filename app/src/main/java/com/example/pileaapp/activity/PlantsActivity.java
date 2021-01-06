@@ -1,5 +1,6 @@
 package com.example.pileaapp.activity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +29,8 @@ import com.example.pileaapp.helpers.RecycleViewAdapterPlants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
@@ -34,6 +38,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
 
 public class PlantsActivity extends AppCompatActivity {
     List s1;
@@ -55,6 +60,8 @@ public class PlantsActivity extends AppCompatActivity {
     //Edit popup itemslocationsField
     private Spinner categoriesField;
     private Spinner locationsField;
+    private int categoriedIndex = 0;
+    private int locationsIndex = 0;
 
 
     @Override
@@ -253,6 +260,7 @@ public class PlantsActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void ShowEditPopup(View v, Plant plant) {
         Button btnClose;
         Button btnEdit;
@@ -260,9 +268,8 @@ public class PlantsActivity extends AppCompatActivity {
         Spinner daysBetweenWateringField;
 
 
-        myEditDialog.setContentView(R.layout.plant_edit_popup);
-        System.out.println("helo edit");
 
+        myEditDialog.setContentView(R.layout.plant_edit_popup);
 
         btnEdit = (Button) myEditDialog.findViewById(R.id.editPlantUpBYes);
         btnClose = (Button) myEditDialog.findViewById(R.id.editPlantUpBNo);
@@ -277,14 +284,37 @@ public class PlantsActivity extends AppCompatActivity {
         locationsField = (Spinner) myEditDialog.findViewById(R.id.editPlantSLocation);
         categoriesField = (Spinner) myEditDialog.findViewById(R.id.editPlantSCategories);
 
-        nameField.setText(plant.getName());
-        descriptionField.setText(plant.getDescription());
 
 
         Plant selectedPlant = plant;
 
-        getCategories();
-        getLocations();
+        //Setup data to be presented
+        nameField.setText(plant.getName().toString());
+        descriptionField.setText(plant.getDescription().toString());
+        noteField.setText(plant.getNote().toString());
+
+
+
+
+        List<Integer> numbers = Stream.iterate(1, n -> n + 1)
+                .limit(30)
+                .collect(Collectors.toList());
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, numbers);
+        daysBetweenWateringField.setAdapter(adapter);
+        daysBetweenWateringField.setSelection((Integer) plant.getDaysBetweenWatering()-1);
+
+        getCategories(selectedPlant);
+        getLocations(selectedPlant);
+
+
+
+
+
+
+
+
+
+
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
 
@@ -308,10 +338,9 @@ public class PlantsActivity extends AppCompatActivity {
                 selectedPlant.setCategoryID(category.getCategoryID());
                 selectedPlant.setCategory(category);
 
+
                 selectedPlant.setLocationID(location.getLocationID());
                 selectedPlant.setLocation(location);
-
-
 
 
                 editPlant(selectedPlant);
@@ -323,7 +352,7 @@ public class PlantsActivity extends AppCompatActivity {
         myEditDialog.show();
     }
 
-    public void getCategories() {
+    public void getCategories(Plant selectedPlant) {
         compositeDisposable = new CompositeDisposable();
 //       Make a request by calling the corresponding method
         Single<List<Category>> list = MainActivity.apiService.getUserCategories(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID());
@@ -347,11 +376,20 @@ public class PlantsActivity extends AppCompatActivity {
                         categoriesAdapter = new ArrayAdapter<Category>(instance, android.R.layout.simple_spinner_item, categories);
                         categoriesField.setAdapter(categoriesAdapter);
 
+
+                        //TODO there has to be a better way to do this
+                        for(int i = 0;i <list.size(); i++){
+                            if(categories.get(i).getCategoryID().equals(selectedPlant.getCategoryID())){
+                                categoriesField.setSelection(i);
+                                break;
+                            }
+                        }
+
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        System.out.println("nakapak");
                         // oops, we best show some error message
                         Log.d(TAG, "ERROR: " + e.getMessage());
                     }
@@ -360,7 +398,7 @@ public class PlantsActivity extends AppCompatActivity {
                 });
     }
 
-    public void getLocations() {
+    public void getLocations(Plant selectedPlant) {
 
         compositeDisposable = new CompositeDisposable();
 //       Make a request by calling the corresponding method
@@ -384,6 +422,15 @@ public class PlantsActivity extends AppCompatActivity {
 
                         locationsAdapter = new ArrayAdapter<Location>(instance, android.R.layout.simple_spinner_item, locations);
                         locationsField.setAdapter(locationsAdapter);
+
+                        //TODO there has to be a better way to do this
+                        for(int i = 0;i <list.size(); i++){
+                            if(locations.get(i).getLocationID().equals(selectedPlant.getLocationID())){
+                                locationsField.setSelection(i);
+                                break;
+                            }
+                        }
+
 
                     }
 
