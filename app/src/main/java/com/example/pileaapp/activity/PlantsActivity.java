@@ -343,6 +343,9 @@ public class PlantsActivity extends AppCompatActivity {
 
                 selectedPlant.setLastWateredDate(lastWateringDateInput.getText().toString());
                 selectedPlant.setDaysBetweenWatering((Integer) daysBetweenWateringField.getSelectedItem());
+
+
+
                 //selectedPlant.setLastWateredDate(dateField.getText().toString());
                 //selectedPlant.setNextWateredDate(selectedPlant.getLastWateredDate() + Integer.parseInt(daysBetweenWateringField.toString()));
 
@@ -374,6 +377,7 @@ public class PlantsActivity extends AppCompatActivity {
         selectedDate = c.getTime();
 
         lastWateringDateInput.setText(dateOnly.format(c.getTime()));
+
 
         lastWateringDateInput.setInputType(InputType.TYPE_NULL);
         lastWateringDateInput.setOnClickListener(new View.OnClickListener() {
