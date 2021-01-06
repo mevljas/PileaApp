@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 import com.example.pileaapp.R;
 import com.example.pileaapp.addPlantActivity;
 
+import com.example.pileaapp.api.models.Category;
+import com.example.pileaapp.api.models.Location;
 import com.example.pileaapp.api.models.Plant;
 import com.example.pileaapp.helpers.RecycleViewAdapterPlants;
 
@@ -37,6 +40,9 @@ public class PlantsActivity extends AppCompatActivity {
     public RecyclerView recyclerView;
     public RecycleViewAdapterPlants myRecycleViewAdapter;
     public Context context = this;
+    private ArrayAdapter<Category> categoriesAdapter;
+    private ArrayAdapter<Location> locationsAdapter;
+
 
     CompositeDisposable compositeDisposable;
     private static final String TAG = PlantsActivity.class.getSimpleName();
@@ -45,6 +51,11 @@ public class PlantsActivity extends AppCompatActivity {
     static Dialog myEditDialog;
 
     public static PlantsActivity instance;    // Some objects require this.
+
+    //Edit popup itemslocationsField
+    private Spinner categoriesField;
+    private Spinner locationsField;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,6 +209,9 @@ public class PlantsActivity extends AppCompatActivity {
     }
 
     public void editPlant(Plant selectedPlant) {
+
+
+
         compositeDisposable = new CompositeDisposable();
 
 
@@ -243,7 +257,7 @@ public class PlantsActivity extends AppCompatActivity {
         Button btnClose;
         Button btnEdit;
         EditText nameField, descriptionField, noteField, dateField;
-        Spinner daysBetweenWateringField, categoriesField, locationsField;
+        Spinner daysBetweenWateringField;
 
 
         myEditDialog.setContentView(R.layout.plant_edit_popup);
@@ -265,36 +279,37 @@ public class PlantsActivity extends AppCompatActivity {
 
         nameField.setText(plant.getName());
         descriptionField.setText(plant.getDescription());
+
+
         Plant selectedPlant = plant;
+
+        getCategories();
+        getLocations();
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                System.out.println("helooo");
-
-                EditText nameField = (EditText) myEditDialog.findViewById(R.id.editPlantETName);
-                EditText noteField = (EditText) myEditDialog.findViewById(R.id.editPlantETNote);
-                EditText descriptionField = (EditText) myEditDialog.findViewById(R.id.editPlantETDescription);
-                EditText dateField = (EditText) myEditDialog.findViewById(R.id.editPlantETDate);
-
-                Spinner daysBetweenWateringField = (Spinner) myEditDialog.findViewById(R.id.editPlantSDaysBetween);
-                Spinner locationsField = (Spinner) myEditDialog.findViewById(R.id.editPlantSLocation);
-                Spinner categoriesField = (Spinner) myEditDialog.findViewById(R.id.editPlantSCategories);
 
                 selectedPlant.setName(nameField.getText().toString());
                 selectedPlant.setDescription(descriptionField.getText().toString());
                 selectedPlant.setNote(noteField.getText().toString());
-/*
-                //Not oki doki! TODO
-                selectedPlant.setLastWateredDate(dateField.getText().toString());
-                selectedPlant.setNextWateredDate(selectedPlant.getLastWateredDate() + Integer.parseInt(daysBetweenWateringField.toString()));
 
-                selectedPlant.setDaysBetweenWatering(Integer.parseInt(daysBetweenWateringField.toString()));*/
 
-                //Problematidni TODO
-                //selectedPlant.setLocation();
-                //selectedPlant.setCategory();
+                //TODO Date stuff
+                //selectedPlant.setLastWateredDate(dateField.getText().toString());
+                //selectedPlant.setNextWateredDate(selectedPlant.getLastWateredDate() + Integer.parseInt(daysBetweenWateringField.toString()));
+
+                //selectedPlant.setDaysBetweenWatering((Integer) daysBetweenWateringField.getSelectedItem());
+
+                Location location = (Location) locationsField.getSelectedItem();
+                Category category = (Category) categoriesField.getSelectedItem();
+
+                selectedPlant.setCategoryID(category.getCategoryID());
+                selectedPlant.setCategory(category);
+
+                selectedPlant.setLocationID(location.getLocationID());
+                selectedPlant.setLocation(location);
 
 
 
@@ -307,4 +322,79 @@ public class PlantsActivity extends AppCompatActivity {
 
         myEditDialog.show();
     }
+
+    public void getCategories() {
+        compositeDisposable = new CompositeDisposable();
+//       Make a request by calling the corresponding method
+        Single<List<Category>> list = MainActivity.apiService.getUserCategories(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID());
+        list.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        first we create a CompositeDisposable object which acts as a container for disposables
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(List list) {
+                        // data is ready and we can update the UI
+                        Log.d(TAG, "SUCCESS");
+                        List<Category> categories =  list;
+                        Log.d(TAG, "Number of categories received: " + categories.size());
+
+
+                        categoriesAdapter = new ArrayAdapter<Category>(instance, android.R.layout.simple_spinner_item, categories);
+                        categoriesField.setAdapter(categoriesAdapter);
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("nakapak");
+                        // oops, we best show some error message
+                        Log.d(TAG, "ERROR: " + e.getMessage());
+                    }
+
+
+                });
+    }
+
+    public void getLocations() {
+
+        compositeDisposable = new CompositeDisposable();
+//       Make a request by calling the corresponding method
+        Single<List<Location>> list = MainActivity.apiService.getUserLocations(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID());
+        list.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        first we create a CompositeDisposable object which acts as a container for disposables
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(List list) {
+                        // data is ready and we can update the UI
+                        Log.d(TAG, "SUCCESS");
+                        List<Location> locations = list;
+                        Log.d(TAG, "Number of locations received: " + locations.size());
+
+
+                        locationsAdapter = new ArrayAdapter<Location>(instance, android.R.layout.simple_spinner_item, locations);
+                        locationsField.setAdapter(locationsAdapter);
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // oops, we best show some error message
+                        Log.d(TAG, "ERROR: " + e.getMessage());
+                    }
+
+
+                });
+    }
+
 }
