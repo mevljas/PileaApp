@@ -5,15 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,7 +30,11 @@ import com.example.pileaapp.api.models.Location;
 import com.example.pileaapp.api.models.Plant;
 import com.example.pileaapp.helpers.RecycleViewAdapterPlants;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -60,9 +67,12 @@ public class PlantsActivity extends AppCompatActivity {
     //Edit popup itemslocationsField
     private Spinner categoriesField;
     private Spinner locationsField;
-    private int categoriedIndex = 0;
-    private int locationsIndex = 0;
 
+    //Date
+    private Date selectedDate;
+    Calendar c;
+    private EditText lastWateringDateInput;
+    private int mYear, mMonth, mDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +176,9 @@ public class PlantsActivity extends AppCompatActivity {
                 deleteDialog.dismiss();
             }
         });
+
+
+
 
         deleteDialog.show();
     }
@@ -327,6 +340,9 @@ public class PlantsActivity extends AppCompatActivity {
 
 
                 //TODO Date stuff
+
+                selectedPlant.setLastWateredDate(lastWateringDateInput.getText().toString());
+                selectedPlant.setDaysBetweenWatering((Integer) daysBetweenWateringField.getSelectedItem());
                 //selectedPlant.setLastWateredDate(dateField.getText().toString());
                 //selectedPlant.setNextWateredDate(selectedPlant.getLastWateredDate() + Integer.parseInt(daysBetweenWateringField.toString()));
 
@@ -348,6 +364,35 @@ public class PlantsActivity extends AppCompatActivity {
 
             }
         });
+
+
+        //Initilize date
+        lastWateringDateInput = (EditText) myEditDialog.findViewById(R.id.editPlantETDate);
+        // Get Current Date
+        c = Calendar.getInstance();
+        SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+        selectedDate = c.getTime();
+
+        lastWateringDateInput.setText(dateOnly.format(c.getTime()));
+
+        lastWateringDateInput.setInputType(InputType.TYPE_NULL);
+        lastWateringDateInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker();
+            }
+        });
+        lastWateringDateInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    showDatePicker();
+                }
+            }
+        });
+
+
+
 
         myEditDialog.show();
     }
@@ -442,6 +487,36 @@ public class PlantsActivity extends AppCompatActivity {
 
 
                 });
+    }
+
+    public void showDatePicker() {
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(instance,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+                        try {
+                            selectedDate = new SimpleDateFormat("yyyy-M-d").parse(year +"-" +(monthOfYear+1) + "-" + dayOfMonth);
+                            System.out.println(year +"-" +(monthOfYear+1) + "-" + dayOfMonth);
+                            SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+                            lastWateringDateInput.setText(dateOnly.format(selectedDate.getTime()));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, mYear, mMonth, mDay);
+
+        datePickerDialog.getDatePicker().setMinDate(selectedDate.getTime() - 10000000000l);
+        datePickerDialog.getDatePicker().setMaxDate(selectedDate.getTime());
+        datePickerDialog.show();
     }
 
 }
