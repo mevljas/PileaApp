@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -142,6 +144,16 @@ public class PlantsActivity extends AppCompatActivity {
     //Open AddPlant Activity
     public void AddPlantAcitivty (View view) {
         Intent intent = new Intent(this, AddPlantActivity.class);
+        startActivity(intent);
+
+    }
+
+    //Open Detail Activity
+    public void DetailPlantAcitivty (View view, Plant plant) {
+        Intent intent = new Intent(this, DetailPlantActivity.class);
+        Bundle extras = new Bundle();
+        extras.putString("plantID", String.valueOf(plant.getPlantID()));
+        intent.putExtras(extras);
         startActivity(intent);
 
     }
