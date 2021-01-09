@@ -152,7 +152,15 @@ public class PlantsActivity extends AppCompatActivity {
     public void DetailPlantAcitivty (View view, Plant plant) {
         Intent intent = new Intent(this, DetailPlantActivity.class);
         Bundle extras = new Bundle();
-        extras.putString("plantID", String.valueOf(plant.getPlantID()));
+        extras.putString("plantName", String.valueOf(plant.getName()));
+        extras.putString("plantDescription", String.valueOf(plant.getDescription()));
+        extras.putString("plantDaysBetween", String.valueOf(plant.getDaysBetweenWatering()+""));
+        extras.putString("plantLastWateringDate", String.valueOf(plant.getLastWateredDate()));
+        extras.putString("nextWateringDate", String.valueOf(plant.getNextWateredDate()));
+
+        extras.putInt("plantCategory", plant.getCategoryID());
+        extras.putInt("plantLocation", plant.getLocationID());
+
         intent.putExtras(extras);
         startActivity(intent);
 
@@ -412,6 +420,9 @@ public class PlantsActivity extends AppCompatActivity {
 
         myEditDialog.show();
     }
+
+
+
 
     public void getCategories(Plant selectedPlant) {
         compositeDisposable = new CompositeDisposable();

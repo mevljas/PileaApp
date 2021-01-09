@@ -86,7 +86,7 @@ public class AddPlantActivity extends AppCompatActivity {
         // Get Current Date
         c = Calendar.getInstance();
         SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
-       selectedDate = c.getTime();
+        selectedDate = c.getTime();
 
         lastWateringDateInput.setText(dateOnly.format(c.getTime()));
 

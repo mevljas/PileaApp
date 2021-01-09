@@ -54,7 +54,7 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
         holder.plantImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("halloooo");
+                System.out.println("halloookkko "+data.get(position).getCategory());
                 instance.DetailPlantAcitivty(v, data.get(position));
             }
         });
@@ -72,6 +72,7 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
+                System.out.println("halloookkko "+data.get(position).getCategory());
                 instance.ShowEditPopup(view, data.get(position));
             }
         });
