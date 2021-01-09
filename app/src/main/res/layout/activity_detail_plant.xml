@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.DetailPlantActivity">
+
+    <View
+        android:id="@+id/registerVRectangle2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="#4C7177"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="95dp"
+        android:layout_height="89dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/flower" />
+
+    <TextView
+        android:id="@+id/detailPlantTVName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="100dp"
+        android:text="Flower name"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        app:layout_constraintStart_toStartOf="@+id/registerVRectangle2"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/detailPlantTVDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Description"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailPlantTVNextwatering" />
+
+    <TextView
+        android:id="@+id/detailPlantTVNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:text="Notes"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="44dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailPlantTVDescription" />
+
+    <TextView
+        android:id="@+id/detailPlantTVNextwatering"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Watering date :"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/registerVRectangle2"
+        app:layout_constraintTop_toBottomOf="@+id/detailPlantTVName" />
+
+    <TextView
+        android:id="@+id/detailPlantTVCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="Category name :"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/registerVRectangle2"
+        app:layout_constraintTop_toBottomOf="@+id/detailPlantTVNote" />
+
+    <TextView
+        android:id="@+id/detailPlantTVLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:text="Location name :"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/registerVRectangle2"
+        app:layout_constraintTop_toBottomOf="@+id/detailPlantTVCategory" />
+
+    <TextView
+        android:id="@+id/detailPlantTVWater"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:text="Watering"
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/registerVRectangle2"
+        app:layout_constraintTop_toBottomOf="@+id/detailPlantTVLocation" />
+
+    <TextView
+        android:id="@+id/detailPlantTVLastWateing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Last watering date :"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/registerVRectangle2"
+        app:layout_constraintTop_toBottomOf="@+id/detailPlantTVWater" />
+
+    <TextView
+        android:id="@+id/detailPlantTVNextwatering2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:text="Next watering date :"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailPlantTVLastWateing" />
+
+    <TextView
+        android:id="@+id/detailPlantTVBetween"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:textColor="@color/white"
+        android:text="Days between watering :"
+        app:layout_constraintStart_toStartOf="@+id/registerVRectangle2"
+        app:layout_constraintTop_toBottomOf="@+id/detailPlantTVNextwatering2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

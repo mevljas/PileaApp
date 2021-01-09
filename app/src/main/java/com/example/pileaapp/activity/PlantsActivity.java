@@ -1,16 +1,24 @@
 package com.example.pileaapp.activity;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,11 +27,19 @@ import android.widget.Toast;
 import com.example.pileaapp.R;
 import com.example.pileaapp.addPlantActivity;
 
+import com.example.pileaapp.api.models.Category;
+import com.example.pileaapp.api.models.Location;
 import com.example.pileaapp.api.models.Plant;
 import com.example.pileaapp.helpers.RecycleViewAdapterPlants;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
@@ -32,11 +48,15 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+
 public class PlantsActivity extends AppCompatActivity {
     List s1;
     public RecyclerView recyclerView;
     public RecycleViewAdapterPlants myRecycleViewAdapter;
     public Context context = this;
+    private ArrayAdapter<Category> categoriesAdapter;
+    private ArrayAdapter<Location> locationsAdapter;
+
 
     CompositeDisposable compositeDisposable;
     private static final String TAG = PlantsActivity.class.getSimpleName();
@@ -45,6 +65,16 @@ public class PlantsActivity extends AppCompatActivity {
     static Dialog myEditDialog;
 
     public static PlantsActivity instance;    // Some objects require this.
+
+    //Edit popup itemslocationsField
+    private Spinner categoriesField;
+    private Spinner locationsField;
+
+    //Date
+    private Date selectedDate;
+    Calendar c;
+    private EditText lastWateringDateInput;
+    private int mYear, mMonth, mDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +148,16 @@ public class PlantsActivity extends AppCompatActivity {
 
     }
 
+    //Open Detail Activity
+    public void DetailPlantAcitivty (View view, Plant plant) {
+        Intent intent = new Intent(this, DetailPlantActivity.class);
+        Bundle extras = new Bundle();
+        extras.putString("plantID", String.valueOf(plant.getPlantID()));
+        intent.putExtras(extras);
+        startActivity(intent);
+
+    }
+
     //Delete plant
     public void ShowDeletePopup(View v, Plant plant) {
         Button btnClose;
@@ -148,6 +188,9 @@ public class PlantsActivity extends AppCompatActivity {
                 deleteDialog.dismiss();
             }
         });
+
+
+
 
         deleteDialog.show();
     }
@@ -198,6 +241,9 @@ public class PlantsActivity extends AppCompatActivity {
     }
 
     public void editPlant(Plant selectedPlant) {
+
+
+
         compositeDisposable = new CompositeDisposable();
 
 
@@ -239,16 +285,16 @@ public class PlantsActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void ShowEditPopup(View v, Plant plant) {
         Button btnClose;
         Button btnEdit;
         EditText nameField, descriptionField, noteField, dateField;
-        Spinner daysBetweenWateringField, categoriesField, locationsField;
+        Spinner daysBetweenWateringField;
+
 
 
         myEditDialog.setContentView(R.layout.plant_edit_popup);
-        System.out.println("helo edit");
-
 
         btnEdit = (Button) myEditDialog.findViewById(R.id.editPlantUpBYes);
         btnClose = (Button) myEditDialog.findViewById(R.id.editPlantUpBNo);
@@ -263,40 +309,69 @@ public class PlantsActivity extends AppCompatActivity {
         locationsField = (Spinner) myEditDialog.findViewById(R.id.editPlantSLocation);
         categoriesField = (Spinner) myEditDialog.findViewById(R.id.editPlantSCategories);
 
-        nameField.setText(plant.getName());
-        descriptionField.setText(plant.getDescription());
+
+
         Plant selectedPlant = plant;
+
+        //Setup data to be presented
+        nameField.setText(plant.getName().toString());
+        descriptionField.setText(plant.getDescription().toString());
+        noteField.setText(plant.getNote().toString());
+
+
+
+
+        List<Integer> numbers = Stream.iterate(1, n -> n + 1)
+                .limit(30)
+                .collect(Collectors.toList());
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, numbers);
+        daysBetweenWateringField.setAdapter(adapter);
+        daysBetweenWateringField.setSelection((Integer) plant.getDaysBetweenWatering()-1);
+
+        getCategories(selectedPlant);
+        getLocations(selectedPlant);
+
+
+
+
+
+
+
+
+
+
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                System.out.println("helooo");
-
-                EditText nameField = (EditText) myEditDialog.findViewById(R.id.editPlantETName);
-                EditText noteField = (EditText) myEditDialog.findViewById(R.id.editPlantETNote);
-                EditText descriptionField = (EditText) myEditDialog.findViewById(R.id.editPlantETDescription);
-                EditText dateField = (EditText) myEditDialog.findViewById(R.id.editPlantETDate);
-
-                Spinner daysBetweenWateringField = (Spinner) myEditDialog.findViewById(R.id.editPlantSDaysBetween);
-                Spinner locationsField = (Spinner) myEditDialog.findViewById(R.id.editPlantSLocation);
-                Spinner categoriesField = (Spinner) myEditDialog.findViewById(R.id.editPlantSCategories);
 
                 selectedPlant.setName(nameField.getText().toString());
                 selectedPlant.setDescription(descriptionField.getText().toString());
                 selectedPlant.setNote(noteField.getText().toString());
-/*
-                //Not oki doki! TODO
-                selectedPlant.setLastWateredDate(dateField.getText().toString());
-                selectedPlant.setNextWateredDate(selectedPlant.getLastWateredDate() + Integer.parseInt(daysBetweenWateringField.toString()));
-
-                selectedPlant.setDaysBetweenWatering(Integer.parseInt(daysBetweenWateringField.toString()));*/
-
-                //Problematidni TODO
-                //selectedPlant.setLocation();
-                //selectedPlant.setCategory();
 
 
+                //TODO Date stuff
+
+                selectedPlant.setLastWateredDate(lastWateringDateInput.getText().toString());
+                selectedPlant.setDaysBetweenWatering((Integer) daysBetweenWateringField.getSelectedItem());
+
+
+
+                //selectedPlant.setLastWateredDate(dateField.getText().toString());
+                //selectedPlant.setNextWateredDate(selectedPlant.getLastWateredDate() + Integer.parseInt(daysBetweenWateringField.toString()));
+
+                //selectedPlant.setDaysBetweenWatering((Integer) daysBetweenWateringField.getSelectedItem());
+
+                Location location = (Location) locationsField.getSelectedItem();
+                Category category = (Category) categoriesField.getSelectedItem();
+
+                selectedPlant.setCategoryID(category.getCategoryID());
+                selectedPlant.setCategory(category);
+
+
+                selectedPlant.setLocationID(location.getLocationID());
+                selectedPlant.setLocation(location);
 
 
                 editPlant(selectedPlant);
@@ -305,6 +380,159 @@ public class PlantsActivity extends AppCompatActivity {
             }
         });
 
+
+        //Initilize date
+        lastWateringDateInput = (EditText) myEditDialog.findViewById(R.id.editPlantETDate);
+        // Get Current Date
+        c = Calendar.getInstance();
+        SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+        selectedDate = c.getTime();
+
+        lastWateringDateInput.setText(dateOnly.format(c.getTime()));
+
+
+        lastWateringDateInput.setInputType(InputType.TYPE_NULL);
+        lastWateringDateInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker();
+            }
+        });
+        lastWateringDateInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    showDatePicker();
+                }
+            }
+        });
+
+
+
+
         myEditDialog.show();
     }
+
+    public void getCategories(Plant selectedPlant) {
+        compositeDisposable = new CompositeDisposable();
+//       Make a request by calling the corresponding method
+        Single<List<Category>> list = MainActivity.apiService.getUserCategories(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID());
+        list.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        first we create a CompositeDisposable object which acts as a container for disposables
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(List list) {
+                        // data is ready and we can update the UI
+                        Log.d(TAG, "SUCCESS");
+                        List<Category> categories =  list;
+                        Log.d(TAG, "Number of categories received: " + categories.size());
+
+
+                        categoriesAdapter = new ArrayAdapter<Category>(instance, android.R.layout.simple_spinner_item, categories);
+                        categoriesField.setAdapter(categoriesAdapter);
+
+
+                        //TODO there has to be a better way to do this
+                        for(int i = 0;i <list.size(); i++){
+                            if(categories.get(i).getCategoryID().equals(selectedPlant.getCategoryID())){
+                                categoriesField.setSelection(i);
+                                break;
+                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // oops, we best show some error message
+                        Log.d(TAG, "ERROR: " + e.getMessage());
+                    }
+
+
+                });
+    }
+
+    public void getLocations(Plant selectedPlant) {
+
+        compositeDisposable = new CompositeDisposable();
+//       Make a request by calling the corresponding method
+        Single<List<Location>> list = MainActivity.apiService.getUserLocations(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID());
+        list.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+//                        first we create a CompositeDisposable object which acts as a container for disposables
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onSuccess(List list) {
+                        // data is ready and we can update the UI
+                        Log.d(TAG, "SUCCESS");
+                        List<Location> locations = list;
+                        Log.d(TAG, "Number of locations received: " + locations.size());
+
+
+                        locationsAdapter = new ArrayAdapter<Location>(instance, android.R.layout.simple_spinner_item, locations);
+                        locationsField.setAdapter(locationsAdapter);
+
+                        //TODO there has to be a better way to do this
+                        for(int i = 0;i <list.size(); i++){
+                            if(locations.get(i).getLocationID().equals(selectedPlant.getLocationID())){
+                                locationsField.setSelection(i);
+                                break;
+                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // oops, we best show some error message
+                        Log.d(TAG, "ERROR: " + e.getMessage());
+                    }
+
+
+                });
+    }
+
+    public void showDatePicker() {
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(instance,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+                        try {
+                            selectedDate = new SimpleDateFormat("yyyy-M-d").parse(year +"-" +(monthOfYear+1) + "-" + dayOfMonth);
+                            System.out.println(year +"-" +(monthOfYear+1) + "-" + dayOfMonth);
+                            SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+                            lastWateringDateInput.setText(dateOnly.format(selectedDate.getTime()));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, mYear, mMonth, mDay);
+
+        datePickerDialog.getDatePicker().setMinDate(selectedDate.getTime() - 10000000000l);
+        datePickerDialog.getDatePicker().setMaxDate(selectedDate.getTime());
+        datePickerDialog.show();
+    }
+
 }
