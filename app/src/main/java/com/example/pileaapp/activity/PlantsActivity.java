@@ -255,7 +255,7 @@ public class PlantsActivity extends AppCompatActivity {
             c = Calendar.getInstance();
             SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
 
-            Date lastWatering = dateOnly.parse(selectedPlant.getLastWateredDate());
+            Date lastWatering = new Date();
 
             c.setTime(lastWatering);
 
@@ -270,7 +270,20 @@ public class PlantsActivity extends AppCompatActivity {
 
             selectedPlant.setLastWateredDate(dateOnly.format(nowDate));
 
+            /*
+            System.out.println("Next watering date "+selectedPlant.getNextWateredDate());
+            System.out.println("Last  watering date "+selectedPlant.getLastWateredDate());*/
+
             editPlant(selectedPlant);
+            //Toast
+            Context context = getApplicationContext();
+            CharSequence text = selectedPlant.getName()+" waterd";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+
+            showPlants();
 
             showPlants();
 
