@@ -76,7 +76,14 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
                 instance.ShowEditPopup(view, data.get(position));
             }
         });
-
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View view) {
+                System.out.println("halloookkko "+data.get(position).getCategory());
+                instance.ShowEditPopup(view, data.get(position));
+            }
+        });
 
 
 
@@ -91,13 +98,16 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
         TextView myText1;
         ImageButton deleteButton;
         ImageButton editButton;
+        ImageButton waterButton;
         ImageView plantImage;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             myText1 = itemView.findViewById(R.id.plantsTVName);
-            editButton = (ImageButton) itemView.findViewById(R.id.plantsIBWater);
+            editButton = (ImageButton) itemView.findViewById(R.id.plantsIBEdit);
             deleteButton = (ImageButton) itemView.findViewById(R.id.plantsIBClose);
+            waterButton = (ImageButton) itemView.findViewById(R.id.plantsIBWater);
+
             plantImage = (ImageView) itemView.findViewById(R.id.plantsIVImage);
         }
     }
