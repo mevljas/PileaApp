@@ -84,15 +84,15 @@ public class DetailPlantActivity extends AppCompatActivity {
 
 
         try {
-            Date nextWatering = dateOnly.parse(plantLastWateringDate);
-            String out = dateOnly.format(nextWatering);
-            plantLastWateringDateText.setText("Watering date : "+out);
+            Date lastwatering = dateOnly.parse(plantLastWateringDate);
+            String out = dateOnly.format(lastwatering);
+            plantLastWateringDateText.setText("Last watering date : "+out);
 
 
 
-            Date lastWatering = dateOnly.parse(nextWateringDate);
-            out = dateOnly.format(lastWatering);
-            plantnextWateringDateText.setText("Watering date : "+out);
+            Date nextwatering = dateOnly.parse(nextWateringDate);
+            out = dateOnly.format(nextwatering);
+            plantnextWateringDateText.setText("Next watering date : "+out);
             plantnextWateringDateText2.setText("Next watering date : "+out);
 
 

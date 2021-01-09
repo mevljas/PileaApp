@@ -76,12 +76,11 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
                 instance.ShowEditPopup(view, data.get(position));
             }
         });
-        holder.editButton.setOnClickListener(new View.OnClickListener() {
+        holder.waterButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                System.out.println("halloookkko "+data.get(position).getCategory());
-                instance.ShowEditPopup(view, data.get(position));
+                instance.waterPlant(data.get(position));
             }
         });
 

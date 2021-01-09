@@ -76,6 +76,7 @@ public class PlantsActivity extends AppCompatActivity {
     private EditText lastWateringDateInput;
     private int mYear, mMonth, mDay;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -247,6 +248,39 @@ public class PlantsActivity extends AppCompatActivity {
 
 
     }
+
+    public void waterPlant(Plant selectedPlant){
+        try{
+
+            c = Calendar.getInstance();
+            SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+
+            Date lastWatering = dateOnly.parse(selectedPlant.getLastWateredDate());
+
+            c.setTime(lastWatering);
+
+            // manipulate date
+            c.add(Calendar.DAY_OF_MONTH, (Integer) selectedPlant.getDaysBetweenWatering());
+
+            // convert calendar to date
+            selectedDate = c.getTime();
+            selectedPlant.setNextWateredDate(dateOnly.format(selectedDate.getTime()));
+
+            Date nowDate = new Date();
+
+            selectedPlant.setLastWateredDate(dateOnly.format(nowDate));
+
+            editPlant(selectedPlant);
+
+            showPlants();
+
+        }catch (Exception e){
+            System.out.println(e.toString());
+
+        }
+
+    }
+
 
     public void editPlant(Plant selectedPlant) {
 
