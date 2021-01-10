@@ -74,6 +74,10 @@ public class CategoriesActivity extends AppCompatActivity {
         super.onPostResume();
         showCategories();
     }
+    public void SyncLocation (View view) {
+        showCategories();
+    }
+
 
     public void showCategories() {
         compositeDisposable = new CompositeDisposable();

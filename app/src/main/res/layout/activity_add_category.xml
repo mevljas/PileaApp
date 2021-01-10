@@ -6,38 +6,88 @@
     android:layout_height="match_parent"
     tools:context=".activity.AddCategoryActivity">
 
-    <LinearLayout
+    <View
+        android:id="@+id/addCategoryVRectangle2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:background="#4C7177"
+        android:textSize="23dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/addCategoryTVName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="24dp"
+        android:text="Name"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCategoryTVAddLocation" />
+
+    <TextView
+        android:id="@+id/addCategoryTVAddLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="36dp"
+        android:text="Add category"
+        android:textColor="@color/white"
+        android:textSize="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCategoryIVCircle" />
+
+    <Button
+        android:id="@+id/addCategoryBSubmit"
+        android:layout_width="315dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/white"
+        android:onClick="addCategory"
+        android:text="Add"
+        android:textColor="#4C7177"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCategoryETInput" />
+
+    <ImageView
+        android:id="@+id/addCategoryIVCircle"
+        android:layout_width="131dp"
+        android:layout_height="129dp"
+        android:layout_marginBottom="600dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:srcCompat="@drawable/ic_circle"
+        app:tint="@color/white" />
 
-        <EditText
-            android:id="@+id/addCategoryETInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Category" />
+    <ImageView
+        android:id="@+id/addCategoryIVIcon"
+        android:layout_width="67dp"
+        android:layout_height="84dp"
 
-        <Button
-            android:id="@+id/addCategoryBSubmit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="addCategory"
-            android:text="Add" />
+        android:layout_marginBottom="623dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_category"
+        app:tint="#4C7177" />
 
-        <TextView
-            android:id="@+id/addCategoryTVStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
-    </LinearLayout>
+    <EditText
+        android:id="@+id/addCategoryETInput"
+        android:layout_width="315dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/white"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCategoryTVName" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
