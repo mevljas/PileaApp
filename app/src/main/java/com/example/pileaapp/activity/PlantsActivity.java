@@ -9,10 +9,10 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -20,18 +20,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pileaapp.R;
-import com.example.pileaapp.addPlantActivity;
 
 import com.example.pileaapp.api.models.Category;
 import com.example.pileaapp.api.models.Location;
 import com.example.pileaapp.api.models.Plant;
 import com.example.pileaapp.helpers.RecycleViewAdapterPlants;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -75,6 +76,8 @@ public class PlantsActivity extends AppCompatActivity {
     Calendar c;
     private EditText lastWateringDateInput;
     private int mYear, mMonth, mDay;
+
+    ImageView plantsImageView;
 
 
     @Override
@@ -153,14 +156,10 @@ public class PlantsActivity extends AppCompatActivity {
     public void DetailPlantAcitivty (View view, Plant plant) {
         Intent intent = new Intent(this, DetailPlantActivity.class);
         Bundle extras = new Bundle();
-        extras.putString("plantName", String.valueOf(plant.getName()));
-        extras.putString("plantDescription", String.valueOf(plant.getDescription()));
-        extras.putString("plantDaysBetween", String.valueOf(plant.getDaysBetweenWatering()+""));
-        extras.putString("plantLastWateringDate", String.valueOf(plant.getLastWateredDate()));
-        extras.putString("nextWateringDate", String.valueOf(plant.getNextWateredDate()));
-
+        extras.putInt("plantId", plant.getPlantID());
         extras.putInt("plantCategory", plant.getCategoryID());
         extras.putInt("plantLocation", plant.getLocationID());
+
 
         intent.putExtras(extras);
         startActivity(intent);

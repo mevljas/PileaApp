@@ -1,7 +1,10 @@
 package com.example.pileaapp.helpers;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,17 +48,31 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
         return new MyViewHolder(view);
     }
 
+//    Decode Base64 image
+    private Bitmap decodeImage(Plant currentPlant){
+        byte[] decodedString = Base64.decode(currentPlant.getImage(), Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        holder.myText1.setText(((Plant) data.get(position)).getName());
+        Plant currentPlant = (Plant) data.get(position);
+
+        holder.myText1.setText((currentPlant).getName());
+
+//        Decode Base64 image
+        if (currentPlant.getImage() != null){
+            holder.plantImage.setImageBitmap(decodeImage(currentPlant));
+        }
+
 
 
         holder.plantImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("halloookkko "+data.get(position).getCategory());
-                instance.DetailPlantAcitivty(v, data.get(position));
+                System.out.println("halloookkko "+currentPlant.getCategory());
+                instance.DetailPlantAcitivty(v, currentPlant);
             }
         });
 
@@ -64,7 +81,7 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
             @Override
             public void onClick( View view) {
                 System.out.println("Instance" +instance+"   ");
-                instance.ShowDeletePopup(view, data.get(position));
+                instance.ShowDeletePopup(view, currentPlant);
             }
         });
 
@@ -73,14 +90,14 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
             @Override
             public void onClick(View view) {
                 System.out.println("halloookkko "+data.get(position).getCategory());
-                instance.ShowEditPopup(view, data.get(position));
+                instance.ShowEditPopup(view, currentPlant);
             }
         });
         holder.waterButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                instance.waterPlant(data.get(position));
+                instance.waterPlant(currentPlant);
             }
         });
 
