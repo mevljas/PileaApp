@@ -143,4 +143,10 @@ public interface ApiService {
                                     @Header("Authorization") String token,
                                     @Header("ApiKey") String apiKey);
 
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @GET("Plant/{id}")
+    Single<Plant> getPlant(@Path("id") int plantID,
+                              @Header("Authorization") String token,
+                              @Header("ApiKey") String apiKey);
+
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.RegisterActivity">
+    tools:context=".activity.AddPlantActivity">
 
     <View
         android:id="@+id/registerVRectangle"
@@ -215,5 +215,14 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         android:onClick="addPlant" />
+
+    <ImageView
+        android:id="@+id/addPlantImage"
+        android:layout_width="100dp"
+        android:layout_height="72dp"
+        android:onClick="addPlantOnImageClick"
+        app:layout_constraintEnd_toEndOf="@+id/addPlantSDaysBetweenWatering"
+        app:layout_constraintTop_toTopOf="@+id/addPlantETLastWateringDate"
+        app:srcCompat="@drawable/flower" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

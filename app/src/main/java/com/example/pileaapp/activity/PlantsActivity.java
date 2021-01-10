@@ -5,33 +5,41 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.text.InputType;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pileaapp.R;
-import com.example.pileaapp.addPlantActivity;
 
 import com.example.pileaapp.api.models.Category;
 import com.example.pileaapp.api.models.Location;
 import com.example.pileaapp.api.models.Plant;
 import com.example.pileaapp.helpers.RecycleViewAdapterPlants;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,6 +84,8 @@ public class PlantsActivity extends AppCompatActivity {
     private EditText lastWateringDateInput;
     private int mYear, mMonth, mDay;
 
+    ImageView plantEditImage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +98,7 @@ public class PlantsActivity extends AppCompatActivity {
 
         s1 = new ArrayList();
         recyclerView = findViewById(R.id.plantsRecycleView);
+
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(PlantsActivity.this, 2);
         recyclerView.setLayoutManager(mGridLayoutManager);
         myRecycleViewAdapter = new RecycleViewAdapterPlants(this, s1);
@@ -153,14 +164,10 @@ public class PlantsActivity extends AppCompatActivity {
     public void DetailPlantAcitivty (View view, Plant plant) {
         Intent intent = new Intent(this, DetailPlantActivity.class);
         Bundle extras = new Bundle();
-        extras.putString("plantName", String.valueOf(plant.getName()));
-        extras.putString("plantDescription", String.valueOf(plant.getDescription()));
-        extras.putString("plantDaysBetween", String.valueOf(plant.getDaysBetweenWatering()+""));
-        extras.putString("plantLastWateringDate", String.valueOf(plant.getLastWateredDate()));
-        extras.putString("nextWateringDate", String.valueOf(plant.getNextWateredDate()));
-
+        extras.putInt("plantId", plant.getPlantID());
         extras.putInt("plantCategory", plant.getCategoryID());
         extras.putInt("plantLocation", plant.getLocationID());
+
 
         intent.putExtras(extras);
         startActivity(intent);
@@ -340,6 +347,13 @@ public class PlantsActivity extends AppCompatActivity {
 
     }
 
+
+    //    Decode Base64 image
+    private Bitmap decodeImage(String image){
+        byte[] decodedString = Base64.decode(image, Base64.NO_WRAP);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void ShowEditPopup(View v, Plant plant) {
         Button btnClose;
@@ -358,20 +372,45 @@ public class PlantsActivity extends AppCompatActivity {
         nameField = (EditText) myEditDialog.findViewById(R.id.editPlantETName);
         noteField = (EditText) myEditDialog.findViewById(R.id.editPlantETNote);
         descriptionField = (EditText) myEditDialog.findViewById(R.id.editPlantETDescription);
-        dateField = (EditText) myEditDialog.findViewById(R.id.editPlantETDate);
 
         daysBetweenWateringField = (Spinner) myEditDialog.findViewById(R.id.editPlantSDaysBetween);
         locationsField = (Spinner) myEditDialog.findViewById(R.id.editPlantSLocation);
         categoriesField = (Spinner) myEditDialog.findViewById(R.id.editPlantSCategories);
 
+        plantEditImage = (ImageView) myEditDialog.findViewById(R.id.editPlantImage);
 
+        lastWateringDateInput = (EditText) myEditDialog.findViewById(R.id.editPlantETDate);
 
-        Plant selectedPlant = plant;
 
         //Setup data to be presented
-        nameField.setText(plant.getName().toString());
-        descriptionField.setText(plant.getDescription().toString());
-        noteField.setText(plant.getNote().toString());
+        if (plant.getName() != null)
+            nameField.setText(plant.getName().toString());
+        if (plant.getDescription() != null)
+            descriptionField.setText(plant.getDescription().toString());
+        if (plant.getNote() != null)
+            noteField.setText(plant.getNote().toString());
+
+        if (plant.getImage() != null){
+            plantEditImage.setImageBitmap(decodeImage(plant.getImage()));
+        }
+
+        SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+
+        if (plant.getLastWateredDate() != null){
+            try {
+                Date lastwatering = dateOnly.parse(plant.getLastWateredDate());
+                lastWateringDateInput.setText(dateOnly.format(lastwatering));
+
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+
+
 
 
 
@@ -383,8 +422,8 @@ public class PlantsActivity extends AppCompatActivity {
         daysBetweenWateringField.setAdapter(adapter);
         daysBetweenWateringField.setSelection((Integer) plant.getDaysBetweenWatering()-1);
 
-        getCategories(selectedPlant);
-        getLocations(selectedPlant);
+        getCategories(plant);
+        getLocations(plant);
 
 
 
@@ -401,49 +440,70 @@ public class PlantsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                selectedPlant.setName(nameField.getText().toString());
-                selectedPlant.setDescription(descriptionField.getText().toString());
-                selectedPlant.setNote(noteField.getText().toString());
+                plant.setName(nameField.getText().toString());
+                plant.setDescription(descriptionField.getText().toString());
+                plant.setNote(noteField.getText().toString());
 
 
-                //TODO Date stuff
+                plant.setLastWateredDate(lastWateringDateInput.getText().toString());
+                plant.setDaysBetweenWatering((Integer) daysBetweenWateringField.getSelectedItem());
 
-                selectedPlant.setLastWateredDate(lastWateringDateInput.getText().toString());
-                selectedPlant.setDaysBetweenWatering((Integer) daysBetweenWateringField.getSelectedItem());
+                c = Calendar.getInstance();
+                c.setTime(selectedDate);
 
+                // manipulate date
+                c.add(Calendar.DAY_OF_MONTH, (Integer) daysBetweenWateringField.getSelectedItem());
 
-
-                //selectedPlant.setLastWateredDate(dateField.getText().toString());
-                //selectedPlant.setNextWateredDate(selectedPlant.getLastWateredDate() + Integer.parseInt(daysBetweenWateringField.toString()));
-
-                //selectedPlant.setDaysBetweenWatering((Integer) daysBetweenWateringField.getSelectedItem());
+                // convert calendar to date
+                SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+                selectedDate = c.getTime();
+                plant.setNextWateredDate(dateOnly.format(selectedDate.getTime()));
 
                 Location location = (Location) locationsField.getSelectedItem();
                 Category category = (Category) categoriesField.getSelectedItem();
 
-                selectedPlant.setCategoryID(category.getCategoryID());
-                selectedPlant.setCategory(category);
+                plant.setCategoryID(category.getCategoryID());
+                plant.setCategory(category);
 
 
-                selectedPlant.setLocationID(location.getLocationID());
-                selectedPlant.setLocation(location);
+                plant.setLocationID(location.getLocationID());
+                plant.setLocation(location);
 
 
-                editPlant(selectedPlant);
+
+
+                //        Read user image
+                BitmapDrawable drawable = (BitmapDrawable) plantEditImage.getDrawable();
+                Bitmap bitmap = drawable.getBitmap();
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream .toByteArray();
+                String encoded = Base64.encodeToString(byteArray, Base64.NO_WRAP);
+                plant.setImage(encoded);
+
+
+                editPlant(plant);
                 myEditDialog.dismiss();
 
             }
         });
 
 
-        //Initilize date
-        lastWateringDateInput = (EditText) myEditDialog.findViewById(R.id.editPlantETDate);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myEditDialog.dismiss();
+            }
+        });
+
+
+
         // Get Current Date
         c = Calendar.getInstance();
-        SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+        dateOnly = new SimpleDateFormat("yyyy-MM-dd");
         selectedDate = c.getTime();
 
-        lastWateringDateInput.setText(dateOnly.format(c.getTime()));
+//        lastWateringDateInput.setText(dateOnly.format(c.getTime()));
 
 
         lastWateringDateInput.setInputType(InputType.TYPE_NULL);
@@ -591,6 +651,75 @@ public class PlantsActivity extends AppCompatActivity {
         datePickerDialog.getDatePicker().setMinDate(selectedDate.getTime() - 10000000000l);
         datePickerDialog.getDatePicker().setMaxDate(selectedDate.getTime());
         datePickerDialog.show();
+    }
+
+
+    public void editPlantOnImageClick(View view) {
+        selectImage(instance);
+    }
+
+
+    private void selectImage(Context context) {
+        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Choose plant image");
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (options[item].equals("Take Photo")) {
+                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePicture, 0);
+
+                } else if (options[item].equals("Choose from Gallery")) {
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickPhoto , 1);
+
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_CANCELED) {
+            switch (requestCode) {
+                case 0:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                        plantEditImage.setImageBitmap(selectedImage);
+                    }
+
+                    break;
+                case 1:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Uri selectedImage = data.getData();
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                        if (selectedImage != null) {
+                            Cursor cursor = getContentResolver().query(selectedImage,
+                                    filePathColumn, null, null, null);
+                            if (cursor != null) {
+                                cursor.moveToFirst();
+
+                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                String picturePath = cursor.getString(columnIndex);
+                                plantEditImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                cursor.close();
+                            }
+                        }
+
+                    }
+                    break;
+            }
+        }
     }
 
 }
