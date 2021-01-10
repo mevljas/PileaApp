@@ -301,6 +301,8 @@ public class AddPlantActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
 
+                        Intent intent = new Intent(context,PlantsActivity.class);
+                        startActivity(intent);
 
                     }
 
