@@ -69,6 +69,7 @@ public class AddCategoryActivity extends AppCompatActivity {
                         toast.show();
 
                         Intent intent = new Intent(context,CategoriesActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
 
 

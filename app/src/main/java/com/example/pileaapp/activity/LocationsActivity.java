@@ -233,7 +233,6 @@ public class LocationsActivity extends AppCompatActivity {
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deletelocation(location);
                 myDeleteDialog.dismiss();
                 showLocations();
             }
