@@ -3,6 +3,7 @@ package com.example.pileaapp.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,8 +23,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AddLocationActivity extends AppCompatActivity {
 
-    private TextView status;
     private EditText locationCreateText;
+    private EditText locationCreateDescription;
+    Context context;
 
     CompositeDisposable compositeDisposable;
     private static final String TAG = AddLocationActivity.class.getSimpleName();
@@ -31,21 +33,23 @@ public class AddLocationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_add_location);
 
-        locationCreateText = (EditText) findViewById(R.id.addLocationETInput);
-        status = (TextView) findViewById(R.id.addLocationTVStatus);
+        locationCreateText = (EditText) findViewById(R.id.addLocationETName);
+        locationCreateDescription = (EditText) findViewById(R.id.addLocationETDescription);
+
+
     }
 
 
     public void addLocation(View view)
     {
         compositeDisposable = new CompositeDisposable();
-        this.status.setText("Posting");
 
         Location locationBody = new Location();
         locationBody.setName(locationCreateText.getText().toString());
-
+        locationBody.setDescription(locationCreateDescription.getText().toString());
 
         Single<Location> locationSingle = MainActivity.apiService.createLocation(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID(), locationBody);
         locationSingle.subscribeOn(Schedulers.io())
@@ -62,7 +66,6 @@ public class AddLocationActivity extends AppCompatActivity {
                         // data is ready and we can update the UI
                         Log.d(TAG, "SUCCESS");
                         Log.d(TAG, "Location created: " + location.getName());
-                        status.setText("Location created: " + location.getName());
 
                         //Toast
                         Context context = getApplicationContext();
@@ -72,6 +75,9 @@ public class AddLocationActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
 
+                        Intent intent = new Intent(context,LocationsActivity.class);
+                        startActivity(intent);
+
 
                     }
 
@@ -79,7 +85,6 @@ public class AddLocationActivity extends AppCompatActivity {
                     public void onError(Throwable e) {
                         // oops, we best show some error message
                         Log.d(TAG, "ERROR: " + e.getMessage());
-                        status.setText("ERROR: " + e.getMessage());
                     }
 
 

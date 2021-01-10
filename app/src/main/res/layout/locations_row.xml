@@ -25,8 +25,8 @@
 
     <TextView
         android:id="@+id/RowLocationName"
-        android:layout_width="142dp"
-        android:layout_height="63dp"
+        android:layout_width="260dp"
+        android:layout_height="28dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="28dp"
         android:text="TextView"
@@ -60,5 +60,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_edit"
         app:tint="#53787E" />
+
+    <TextView
+        android:id="@+id/RowLocationDescription"
+        android:layout_width="263dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="36dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/RowLocationName"
+        app:layout_constraintTop_toTopOf="@+id/RowLocationName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
