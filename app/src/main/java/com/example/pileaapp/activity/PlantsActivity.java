@@ -372,13 +372,14 @@ public class PlantsActivity extends AppCompatActivity {
         nameField = (EditText) myEditDialog.findViewById(R.id.editPlantETName);
         noteField = (EditText) myEditDialog.findViewById(R.id.editPlantETNote);
         descriptionField = (EditText) myEditDialog.findViewById(R.id.editPlantETDescription);
-        dateField = (EditText) myEditDialog.findViewById(R.id.editPlantETDate);
 
         daysBetweenWateringField = (Spinner) myEditDialog.findViewById(R.id.editPlantSDaysBetween);
         locationsField = (Spinner) myEditDialog.findViewById(R.id.editPlantSLocation);
         categoriesField = (Spinner) myEditDialog.findViewById(R.id.editPlantSCategories);
 
         plantEditImage = (ImageView) myEditDialog.findViewById(R.id.editPlantImage);
+
+        lastWateringDateInput = (EditText) myEditDialog.findViewById(R.id.editPlantETDate);
 
 
         //Setup data to be presented
@@ -392,6 +393,24 @@ public class PlantsActivity extends AppCompatActivity {
         if (plant.getImage() != null){
             plantEditImage.setImageBitmap(decodeImage(plant.getImage()));
         }
+
+        SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+
+        if (plant.getLastWateredDate() != null){
+            try {
+                Date lastwatering = dateOnly.parse(plant.getLastWateredDate());
+                lastWateringDateInput.setText(dateOnly.format(lastwatering));
+
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+
+
 
 
 
@@ -478,14 +497,13 @@ public class PlantsActivity extends AppCompatActivity {
         });
 
 
-        //Initilize date
-        lastWateringDateInput = (EditText) myEditDialog.findViewById(R.id.editPlantETDate);
+
         // Get Current Date
         c = Calendar.getInstance();
-        SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+        dateOnly = new SimpleDateFormat("yyyy-MM-dd");
         selectedDate = c.getTime();
 
-        lastWateringDateInput.setText(dateOnly.format(c.getTime()));
+//        lastWateringDateInput.setText(dateOnly.format(c.getTime()));
 
 
         lastWateringDateInput.setInputType(InputType.TYPE_NULL);
