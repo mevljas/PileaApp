@@ -15,26 +15,22 @@
         android:id="@+id/editPlantUpBNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="52dp"
         android:layout_marginBottom="28dp"
         android:backgroundTint="#B6B6B6"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPlantSLocation"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/editPlantUpBYes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="56dp"
         android:layout_marginBottom="28dp"
         android:text="Edit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPlantSLocation"
-        app:layout_constraintVertical_bias="0.589" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/editPopUpTVTitle"
@@ -75,12 +71,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="40dp"
-        android:text="Days between watering"
+        android:layout_marginEnd="44dp"
         android:textColor="@color/white"
+        android:text="Days between watering"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/editPlantTVNote"
         app:layout_constraintTop_toBottomOf="@+id/editPlantETDescription" />
 
     <TextView
@@ -100,8 +94,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
         android:layout_marginTop="4dp"
-        android:text="Last watering date"
         android:textColor="@color/white"
+        android:text="Last watering date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantETNote" />
 
@@ -132,13 +126,12 @@
         android:id="@+id/editPlantETDescription"
         android:layout_width="316dp"
         android:layout_height="54dp"
+        android:layout_marginStart="44dp"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
-        android:backgroundTint="@color/white"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantTVDescription" />
 
@@ -147,52 +140,45 @@
         android:layout_width="141dp"
         android:layout_height="52dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="44dp"
-
         android:backgroundTint="@color/white"
+
+        android:layout_marginEnd="44dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/editPlantETNote"
         app:layout_constraintTop_toBottomOf="@+id/editPlantTVDaysBetween" />
 
     <EditText
         android:id="@+id/editPlantETNote"
         android:layout_width="158dp"
         android:layout_height="50dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="44dp"
         android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/editPlantTVDaysBetween"
-        app:layout_constraintHorizontal_bias="0.238"
+        android:text="Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantTVNote" />
 
     <EditText
         android:id="@+id/editPlantETDate"
-        android:layout_width="154dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
-        android:inputType="date"
         android:textColor="@color/white"
-        android:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.175"
+        android:inputType="date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantTVLastWatering" />
-
-
 
     <Spinner
         android:id="@+id/editPlantSCategories"
         android:layout_width="313dp"
         android:layout_height="59dp"
+        android:layout_marginStart="44dp"
         android:layout_marginTop="4dp"
         android:backgroundTint="@color/white"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantETCategories" />
 
@@ -200,13 +186,13 @@
         android:id="@+id/editPlantETName"
         android:layout_width="317dp"
         android:layout_height="47dp"
+        android:layout_marginStart="44dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="New name"
         android:textColor="@color/white"
         app:backgroundTint="#9E9E9E"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantTVName" />
 
@@ -214,10 +200,10 @@
         android:id="@+id/editPlantSLocation"
         android:layout_width="308dp"
         android:layout_height="59dp"
+        android:layout_marginStart="48dp"
+        android:textColor="@color/white"
         android:layout_marginTop="12dp"
         android:backgroundTint="@color/white"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantTVLocation" />
 
