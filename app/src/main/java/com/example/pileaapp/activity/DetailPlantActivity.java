@@ -51,7 +51,7 @@ public class DetailPlantActivity extends AppCompatActivity {
 
     //    Decode Base64 image
     private Bitmap decodeImage(String image){
-        byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
+        byte[] decodedString = Base64.decode(image, Base64.NO_WRAP);
         return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
