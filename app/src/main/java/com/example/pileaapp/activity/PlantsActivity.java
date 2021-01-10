@@ -626,6 +626,9 @@ public class PlantsActivity extends AppCompatActivity {
     public void showDatePicker() {
         // Get Current Date
         final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(instance,
