@@ -435,6 +435,14 @@ public class PlantsActivity extends AppCompatActivity {
         });
 
 
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myEditDialog.dismiss();
+            }
+        });
+
+
         //Initilize date
         lastWateringDateInput = (EditText) myEditDialog.findViewById(R.id.editPlantETDate);
         // Get Current Date

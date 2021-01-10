@@ -59,6 +59,7 @@ public class DetailPlantActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detail_plant);
 
 
         Intent i = getIntent();
@@ -89,7 +90,7 @@ public class DetailPlantActivity extends AppCompatActivity {
         getCategory(plantCategoryId);
         getLocation(plantLocationId);
 
-        setContentView(R.layout.activity_detail_plant);
+
     }
 
 
