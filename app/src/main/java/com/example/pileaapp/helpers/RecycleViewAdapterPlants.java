@@ -1,6 +1,7 @@
 package com.example.pileaapp.helpers;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pileaapp.R;
@@ -48,6 +50,16 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
 
         holder.myText1.setText(((Plant) data.get(position)).getName());
 
+
+        holder.plantImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("halloookkko "+data.get(position).getCategory());
+                instance.DetailPlantAcitivty(v, data.get(position));
+            }
+        });
+
+
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick( View view) {
@@ -57,12 +69,20 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
         });
 
         holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                PlantsActivity.instance.ShowEditPopup(view, data.get(position));
+                System.out.println("halloookkko "+data.get(position).getCategory());
+                instance.ShowEditPopup(view, data.get(position));
             }
         });
-
+        holder.waterButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View view) {
+                instance.waterPlant(data.get(position));
+            }
+        });
 
 
 
@@ -77,12 +97,17 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
         TextView myText1;
         ImageButton deleteButton;
         ImageButton editButton;
+        ImageButton waterButton;
+        ImageView plantImage;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             myText1 = itemView.findViewById(R.id.plantsTVName);
-            editButton = (ImageButton) itemView.findViewById(R.id.plantsIBWater);
+            editButton = (ImageButton) itemView.findViewById(R.id.plantsIBEdit);
             deleteButton = (ImageButton) itemView.findViewById(R.id.plantsIBClose);
+            waterButton = (ImageButton) itemView.findViewById(R.id.plantsIBWater);
+
+            plantImage = (ImageView) itemView.findViewById(R.id.plantsIVImage);
         }
     }
 }

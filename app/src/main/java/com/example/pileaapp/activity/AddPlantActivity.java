@@ -86,7 +86,7 @@ public class AddPlantActivity extends AppCompatActivity {
         // Get Current Date
         c = Calendar.getInstance();
         SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
-       selectedDate = c.getTime();
+        selectedDate = c.getTime();
 
         lastWateringDateInput.setText(dateOnly.format(c.getTime()));
 
@@ -116,6 +116,9 @@ public class AddPlantActivity extends AppCompatActivity {
     public void showDatePicker() {
         // Get Current Date
         final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(instance,

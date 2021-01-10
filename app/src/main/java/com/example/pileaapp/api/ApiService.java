@@ -37,6 +37,7 @@ public interface ApiService {
                                  @Query("userId") String userId);
 
 
+
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @POST("Category")
     Single<Category> createCategory(@Header("Authorization") String token,
@@ -50,6 +51,12 @@ public interface ApiService {
                                   @Header("Authorization") String token,
                                     @Header("ApiKey") String apiKey,
                                     @Body Category categoryBody);
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @GET("Category/{id}")
+    Single<Category> getCategory(@Path("id") int categoryID,
+                                  @Header("Authorization") String token,
+                                  @Header("ApiKey") String apiKey);
 
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
@@ -87,6 +94,13 @@ public interface ApiService {
                                   @Header("Authorization") String token,
                                   @Header("ApiKey") String apiKey,
                                   @Body Location locationBody);
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @GET("Location/{id}")
+    Single<Location> getLocation(@Path("id") int locationID,
+                                    @Header("Authorization") String token,
+                                    @Header("ApiKey") String apiKey);
+
 
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
