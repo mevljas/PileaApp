@@ -3,6 +3,7 @@ package com.example.pileaapp.helpers;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -24,6 +25,10 @@ import com.example.pileaapp.activity.LocationsActivity;
 import com.example.pileaapp.activity.PlantsActivity;
 import com.example.pileaapp.api.models.Plant;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.pileaapp.activity.PlantsActivity.instance;
@@ -60,6 +65,24 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
         Plant currentPlant = (Plant) data.get(position);
 
         holder.myText1.setText((currentPlant).getName());
+
+        Date lastWatering = new Date();
+        Date currentDate = new Date();
+        SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            lastWatering = dateOnly.parse(currentPlant.getNextWateredDate());
+            holder.days.setText("Water on "+dateOnly.format(lastWatering));
+
+            if(currentDate.after(lastWatering)){
+                holder.days.setTextColor(Color.parseColor("#FF0000"));
+            }
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
 //        Decode Base64 image
         if (currentPlant.getImage() != null){
@@ -112,6 +135,7 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView myText1;
+        TextView days;
         ImageButton deleteButton;
         ImageButton editButton;
         ImageButton waterButton;
@@ -120,6 +144,8 @@ public class RecycleViewAdapterPlants extends RecyclerView.Adapter<RecycleViewAd
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             myText1 = itemView.findViewById(R.id.plantsTVName);
+            days = itemView.findViewById(R.id.plantsTVNotes);
+
             editButton = (ImageButton) itemView.findViewById(R.id.plantsIBEdit);
             deleteButton = (ImageButton) itemView.findViewById(R.id.plantsIBClose);
             waterButton = (ImageButton) itemView.findViewById(R.id.plantsIBWater);

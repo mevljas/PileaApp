@@ -36,12 +36,11 @@
         android:id="@+id/categoriesEditPopUpTVTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="36dp"
         android:text="Edit"
         android:textColor="@color/white"
         android:textSize="25dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/categoriesEditPopUpTVName"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -57,4 +56,14 @@
         app:backgroundTint="#9E9E9E"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/categoriesEditPopUpTVName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Name"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/categoriesEditPopUpETInput"
+        app:layout_constraintTop_toBottomOf="@+id/categoriesEditPopUpTVTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

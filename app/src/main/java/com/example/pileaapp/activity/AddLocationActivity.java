@@ -76,6 +76,7 @@ public class AddLocationActivity extends AppCompatActivity {
                         toast.show();
 
                         Intent intent = new Intent(context,LocationsActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
 
 

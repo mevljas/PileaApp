@@ -220,6 +220,7 @@
         android:id="@+id/addPlantImage"
         android:layout_width="100dp"
         android:layout_height="72dp"
+        android:layout_marginEnd="28dp"
         android:onClick="addPlantOnImageClick"
         app:layout_constraintEnd_toEndOf="@+id/addPlantSDaysBetweenWatering"
         app:layout_constraintTop_toTopOf="@+id/addPlantETLastWateringDate"

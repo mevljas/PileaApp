@@ -64,7 +64,7 @@
                 android:layout_marginBottom="32dp"
                 android:gravity="center"
                 android:text="Notes"
-                android:textSize="18sp"
+                android:textSize="13sp"
                 android:textStyle="italic|bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

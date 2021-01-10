@@ -11,6 +11,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -526,6 +527,10 @@ public class PlantsActivity extends AppCompatActivity {
 
 
         myEditDialog.show();
+    }
+
+    public void SyncLocation (View view) {
+        showPlants();
     }
 
 

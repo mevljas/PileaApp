@@ -3,6 +3,7 @@ package com.example.pileaapp.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -23,7 +24,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AddCategoryActivity extends AppCompatActivity {
 
-    private TextView status;
     private EditText categoryCreateText;
 
     CompositeDisposable compositeDisposable;
@@ -35,13 +35,11 @@ public class AddCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_category);
 
         categoryCreateText = (EditText) findViewById(R.id.addCategoryETInput);
-        status = (TextView) findViewById(R.id.addCategoryTVStatus);
     }
 
     public void addCategory(View view)
     {
         compositeDisposable = new CompositeDisposable();
-        this.status.setText("Posting");
 
         Category categoryBody = new Category();
         categoryBody.setPlantCategory(categoryCreateText.getText().toString());
@@ -62,8 +60,6 @@ public class AddCategoryActivity extends AppCompatActivity {
                         // data is ready and we can update the UI
                         Log.d(TAG, "SUCCESS");
                         Log.d(TAG, "Category created: " + category.getPlantCategory());
-                        status.setText("Category created: " + category.getPlantCategory());
-
                         //Toast
                         Context context = getApplicationContext();
                         CharSequence text = "Category added";
@@ -72,6 +68,10 @@ public class AddCategoryActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
 
+                        Intent intent = new Intent(context,CategoriesActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+
 
                     }
 
@@ -79,7 +79,6 @@ public class AddCategoryActivity extends AppCompatActivity {
                     public void onError(Throwable e) {
                         // oops, we best show some error message
                         Log.d(TAG, "ERROR: " + e.getMessage());
-                        status.setText("ERROR: " + e.getMessage());
                     }
 
 

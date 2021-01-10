@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initializeApi();
 
-        AnimateButtons();
+
+
 
         Button plants = findViewById(R.id.mainBPlants);
 
@@ -46,20 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void AnimateButtons(){
         ImageView categories = findViewById(R.id.mainIVCategories);
-        ImageView home = findViewById(R.id.mainIVHome);
-        ImageView social = findViewById(R.id.mainIVFriends);
         ImageView locations = findViewById(R.id.mainIVLocations);
         ImageView plant = findViewById(R.id.mainIVPlants);
 
         categories.setTranslationY(300);
-        home.setTranslationY(300);
-        social.setTranslationY(300);
         locations.setTranslationY(300);
         plant.setTranslationY(300);
 
         categories.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
-        home.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
-        social.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
         locations.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
         plant.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
 

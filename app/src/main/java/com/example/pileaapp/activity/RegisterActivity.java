@@ -3,6 +3,7 @@ package com.example.pileaapp.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -35,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        compositeDisposable = new CompositeDisposable();
 
         email = (EditText) findViewById(R.id.addPlantETName);
         password1 = (EditText) findViewById(R.id.registerETPassword);
@@ -86,6 +89,11 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
 
+                        //To login
+                        Intent intent = new Intent(context,LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+
 
                     }
 
@@ -95,6 +103,13 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onError(Throwable e) {
                         // oops, we best show some error message
                         Log.d(TAG, "ERROR: " + e.getMessage());
+                        //Toast
+                        Context context = getApplicationContext();
+                        CharSequence text = "Register failed";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
 
                     }
 
@@ -117,26 +132,68 @@ public class RegisterActivity extends AppCompatActivity {
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches()){
             formValid = false;
+            //Toast
+            Context context = getApplicationContext();
+            CharSequence text = "Wrong email format";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
             System.out.println("Email wrong");
         }
         if(!specailCharPatten.matcher(password1.getText()).find()){
             formValid = false;
+            //Toast
+            Context context = getApplicationContext();
+            CharSequence text = "Missing special characters";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
             System.out.println("No special characters");
         }
         if(!UpperCasePatten.matcher(password1.getText().toString()).find()){
             formValid = false;
+            //Toast
+            Context context = getApplicationContext();
+            CharSequence text = "Missing uppsercase characters";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
             System.out.println("No uppsercase characters");
         }
         if(!lowerCasePatten.matcher(password1.getText().toString()).find()){
             formValid = false;
+            //Toast
+            Context context = getApplicationContext();
+            CharSequence text = "Missing lowercase characters";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
             System.out.println("No lowercase characters");
         }
         if(!digitCasePatten.matcher(password1.getText().toString()).find()){
             formValid = false;
+            //Toast
+            Context context = getApplicationContext();
+            CharSequence text = "Missing digital characters";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
             System.out.println("No digital characters");
         }
         if(!((password1.getText().toString()).equals(password2.getText().toString()))){
             formValid = false;
+            //Toast
+            Context context = getApplicationContext();
+            CharSequence text = "Passwords don't match";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
             System.out.println(password1.getText()+" password dont match "+password2.getText());
         }
 

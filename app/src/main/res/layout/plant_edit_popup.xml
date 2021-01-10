@@ -12,29 +12,29 @@
     >
 
     <Button
+        android:id="@+id/editPlantUpBYes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="28dp"
+        android:text="Edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editPlantSLocation"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
         android:id="@+id/editPlantUpBNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="64dp"
         android:layout_marginBottom="28dp"
         android:backgroundTint="#B6B6B6"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantSLocation"
-        app:layout_constraintVertical_bias="0.666" />
-
-    <Button
-        android:id="@+id/editPlantUpBYes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="28dp"
-        android:text="Edit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPlantSLocation"
-        app:layout_constraintVertical_bias="0.589" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/editPopUpTVTitle"
@@ -52,10 +52,10 @@
         android:id="@+id/editPlantTVName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="80dp"
-        android:textColor="@color/white"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="84dp"
         android:text="Name"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -63,10 +63,10 @@
         android:id="@+id/editPlantTVDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
-        android:textColor="@color/white"
         android:text="Description"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantETName" />
 
@@ -87,10 +87,10 @@
         android:id="@+id/editPlantTVNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="12dp"
-        android:textColor="@color/white"
         android:text="Note"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantETDescription" />
 
@@ -98,7 +98,7 @@
         android:id="@+id/editPlantTVLastWatering"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="4dp"
         android:text="Last watering date"
         android:textColor="@color/white"
@@ -109,11 +109,11 @@
         android:id="@+id/editPlantETCategories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="4dp"
-        android:textColor="@color/white"
-
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
         android:text="Categories"
+
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantETDate" />
 
@@ -121,7 +121,7 @@
         android:id="@+id/editPlantTVLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="12dp"
         android:text="Locations"
         android:textColor="@color/white"
@@ -130,13 +130,13 @@
 
     <EditText
         android:id="@+id/editPlantETDescription"
-        android:layout_width="316dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="287dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/white"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        android:backgroundTint="@color/white"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -146,12 +146,13 @@
         android:id="@+id/editPlantSDaysBetween"
         android:layout_width="141dp"
         android:layout_height="52dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="44dp"
-
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="40dp"
         android:backgroundTint="@color/white"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.782"
         app:layout_constraintStart_toEndOf="@+id/editPlantETNote"
         app:layout_constraintTop_toBottomOf="@+id/editPlantTVDaysBetween" />
 
@@ -160,46 +161,49 @@
         android:layout_width="158dp"
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textColor="@color/white"
+        android:backgroundTint="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/editPlantTVDaysBetween"
-        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantTVNote" />
+
 
     <EditText
         android:id="@+id/editPlantETDate"
         android:layout_width="154dp"
         android:layout_height="56dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/white"
         android:ems="10"
         android:inputType="date"
         android:textColor="@color/white"
-        android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.175"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantTVLastWatering" />
-
-
 
     <Spinner
         android:id="@+id/editPlantSCategories"
         android:layout_width="313dp"
         android:layout_height="59dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/white"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantETCategories" />
 
     <EditText
         android:id="@+id/editPlantETName"
-        android:layout_width="317dp"
-        android:layout_height="47dp"
+        android:layout_width="289dp"
+        android:layout_height="52dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -207,27 +211,32 @@
         android:textColor="@color/white"
         app:backgroundTint="#9E9E9E"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantTVName" />
 
     <Spinner
         android:id="@+id/editPlantSLocation"
-        android:layout_width="308dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="307dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="4dp"
         android:backgroundTint="@color/white"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPlantTVLocation" />
 
     <ImageView
         android:id="@+id/editPlantImage"
-        android:layout_width="64dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="34dp"
+        android:layout_width="94dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="20dp"
         android:onClick="editPlantOnImageClick"
-        app:layout_constraintEnd_toEndOf="@+id/editPlantSDaysBetween"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toEndOf="@+id/editPlantETDate"
         app:layout_constraintTop_toBottomOf="@+id/editPlantSDaysBetween"
         app:srcCompat="@drawable/flower" />
 
