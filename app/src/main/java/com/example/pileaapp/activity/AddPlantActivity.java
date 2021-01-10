@@ -271,7 +271,7 @@ public class AddPlantActivity extends AppCompatActivity {
         BitmapDrawable drawable = (BitmapDrawable) plantImage.getDrawable();
         Bitmap bitmap = drawable.getBitmap();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
         String encoded = Base64.encodeToString(byteArray, Base64.NO_WRAP);
         plantBody.setImage(encoded);
