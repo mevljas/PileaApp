@@ -134,6 +134,7 @@ public class LocationsActivity extends AppCompatActivity {
                         showLocations();
 
 
+
                     }
 
                     @Override
@@ -195,7 +196,9 @@ public class LocationsActivity extends AppCompatActivity {
 
     }
 
-
+    public void SyncLocation (View view) {
+        showLocations();
+    }
 
     // Acitivity handeling functions
     public void addLocationActivity (View view) {

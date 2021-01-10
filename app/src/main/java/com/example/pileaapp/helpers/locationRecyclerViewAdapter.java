@@ -42,6 +42,7 @@ public class locationRecyclerViewAdapter extends RecyclerView.Adapter<locationRe
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 //        TODO: this has to be done differently for different object types. This is just a temporary fix.
         holder.myText1.setText(((Location) data.get(position)).getName());
+        holder.descriptionText.setText(((Location) data.get(position)).getDescription());
 
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,12 +68,14 @@ public class locationRecyclerViewAdapter extends RecyclerView.Adapter<locationRe
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView myText1;
+        TextView descriptionText;
         ImageView editButton;
         ImageButton deleteButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             myText1 = (TextView) itemView.findViewById(R.id.RowLocationName);
+            descriptionText = (TextView) itemView.findViewById(R.id.RowLocationDescription);
             editButton = (ImageView) itemView.findViewById(R.id.rowLocationEdit);
             deleteButton = (ImageButton) itemView.findViewById(R.id.rowLocationDelete);
         }
