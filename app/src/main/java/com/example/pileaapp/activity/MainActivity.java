@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initializeApi();
 
+
+
         AnimateButtons();
 
         Button plants = findViewById(R.id.mainBPlants);

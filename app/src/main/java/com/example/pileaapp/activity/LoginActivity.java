@@ -77,7 +77,8 @@ public class LoginActivity extends AppCompatActivity {
                         MainActivity.userLogin = login;
                         login.setToken("Bearer " + login.getToken());
 
-                        showMainActivity();
+                        Intent intent = new Intent(context,MainActivity.class);
+                        startActivity(intent);
 
 
 
