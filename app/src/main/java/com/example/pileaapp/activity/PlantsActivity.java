@@ -426,17 +426,19 @@ public class PlantsActivity extends AppCompatActivity {
                 plant.setNote(noteField.getText().toString());
 
 
-                //TODO Date stuff
-
                 plant.setLastWateredDate(lastWateringDateInput.getText().toString());
                 plant.setDaysBetweenWatering((Integer) daysBetweenWateringField.getSelectedItem());
 
+                c = Calendar.getInstance();
+                c.setTime(selectedDate);
 
+                // manipulate date
+                c.add(Calendar.DAY_OF_MONTH, (Integer) daysBetweenWateringField.getSelectedItem());
 
-                //selectedPlant.setLastWateredDate(dateField.getText().toString());
-                //selectedPlant.setNextWateredDate(selectedPlant.getLastWateredDate() + Integer.parseInt(daysBetweenWateringField.toString()));
-
-                //selectedPlant.setDaysBetweenWatering((Integer) daysBetweenWateringField.getSelectedItem());
+                // convert calendar to date
+                SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+                selectedDate = c.getTime();
+                plant.setNextWateredDate(dateOnly.format(selectedDate.getTime()));
 
                 Location location = (Location) locationsField.getSelectedItem();
                 Category category = (Category) categoriesField.getSelectedItem();
