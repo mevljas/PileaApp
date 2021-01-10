@@ -8,12 +8,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.icu.util.GregorianCalendar;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -31,6 +33,7 @@ import com.example.pileaapp.api.models.Category;
 import com.example.pileaapp.api.models.Location;
 import com.example.pileaapp.api.models.Plant;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -262,6 +265,16 @@ public class AddPlantActivity extends AppCompatActivity {
         SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
         selectedDate = c.getTime();
         plantBody.setNextWateredDate(dateOnly.format(selectedDate.getTime()));
+
+
+//        Read user image
+        BitmapDrawable drawable = (BitmapDrawable) plantImage.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        String encoded = Base64.encodeToString(byteArray, Base64.NO_WRAP);
+        plantBody.setImage(encoded);
 
 
         Single<Plant> plantSingle = MainActivity.apiService.createPlant(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID(), category.getCategoryID(), location.getLocationID(), plantBody);
