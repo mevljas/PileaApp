@@ -11,8 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PileaApp">
-        <activity android:name=".activity.DetailPlantActivity"></activity>
-        <activity android:name=".activity.AddPlantActivity" />
+        <activity android:name=".activity.AddPlantActivity"/>
         <activity android:name=".activity.AddLocationActivity" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.LoginActivity" />
