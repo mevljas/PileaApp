@@ -144,7 +144,7 @@
 
     <Spinner
         android:id="@+id/editPlantSDaysBetween"
-        android:layout_width="141dp"
+        android:layout_width="100dp"
         android:layout_height="52dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="8dp"
@@ -152,7 +152,7 @@
         android:backgroundTint="@color/white"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.782"
+        app:layout_constraintHorizontal_bias="0.672"
         app:layout_constraintStart_toEndOf="@+id/editPlantETNote"
         app:layout_constraintTop_toBottomOf="@+id/editPlantTVDaysBetween" />
 

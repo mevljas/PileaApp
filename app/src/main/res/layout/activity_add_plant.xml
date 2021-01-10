@@ -66,12 +66,12 @@
 
     <Spinner
         android:id="@+id/addPlantSDaysBetweenWatering"
-        android:layout_width="149dp"
+        android:layout_width="100dp"
         android:layout_height="51dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.449"
+        app:layout_constraintHorizontal_bias="0.702"
         app:layout_constraintStart_toEndOf="@+id/addPlantETNote"
         app:layout_constraintTop_toBottomOf="@+id/addPlantTVImage" />
 
@@ -220,7 +220,6 @@
         android:id="@+id/addPlantImage"
         android:layout_width="100dp"
         android:layout_height="72dp"
-        android:layout_marginEnd="28dp"
         android:onClick="addPlantOnImageClick"
         app:layout_constraintEnd_toEndOf="@+id/addPlantSDaysBetweenWatering"
         app:layout_constraintTop_toTopOf="@+id/addPlantETLastWateringDate"
