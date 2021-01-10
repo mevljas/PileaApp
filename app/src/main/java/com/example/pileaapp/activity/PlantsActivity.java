@@ -382,9 +382,12 @@ public class PlantsActivity extends AppCompatActivity {
 
 
         //Setup data to be presented
-        nameField.setText(plant.getName().toString());
-        descriptionField.setText(plant.getDescription().toString());
-        noteField.setText(plant.getNote().toString());
+        if (plant.getName() != null)
+            nameField.setText(plant.getName().toString());
+        if (plant.getDescription() != null)
+            descriptionField.setText(plant.getDescription().toString());
+        if (plant.getNote() != null)
+            noteField.setText(plant.getNote().toString());
 
         if (plant.getImage() != null){
             plantEditImage.setImageBitmap(decodeImage(plant.getImage()));
