@@ -277,44 +277,61 @@ public class AddPlantActivity extends AppCompatActivity {
         plantBody.setImage(encoded);
 
 
-        Single<Plant> plantSingle = MainActivity.apiService.createPlant(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID(), category.getCategoryID(), location.getLocationID(), plantBody);
-        plantSingle.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<Plant>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
+
+        if (category != null && location != null){
+
+
+            Single<Plant> plantSingle = MainActivity.apiService.createPlant(MainActivity.userLogin.getToken(), MainActivity.API_KEY, MainActivity.userLogin.getUserID(), category.getCategoryID(), location.getLocationID(), plantBody);
+            plantSingle.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new SingleObserver<Plant>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
 //                        first we create a CompositeDisposable object which acts as a container for disposables
-                        compositeDisposable.add(d);
-                    }
+                            compositeDisposable.add(d);
+                        }
 
-                    @Override
-                    public void onSuccess(Plant plant) {
-                        // data is ready and we can update the UI
-                        Log.d(TAG, "SUCCESS");
-                        Log.d(TAG, " created: " + plant.getName());
+                        @Override
+                        public void onSuccess(Plant plant) {
+                            // data is ready and we can update the UI
+                            Log.d(TAG, "SUCCESS");
+                            Log.d(TAG, " created: " + plant.getName());
 
-                        //Toast
-                        Context context = getApplicationContext();
-                        CharSequence text = "Plant added";
-                        int duration = Toast.LENGTH_SHORT;
+                            //Toast
+                            Context context = getApplicationContext();
+                            CharSequence text = "Plant added";
+                            int duration = Toast.LENGTH_SHORT;
 
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
 
-                        Intent intent = new Intent(context,PlantsActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                            Intent intent = new Intent(context,PlantsActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
 
-                    }
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        // oops, we best show some error message
-                        Log.d(TAG, "ERROR: " + e.getMessage());
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            // oops, we best show some error message
+                            Log.d(TAG, "ERROR: " + e.getMessage());
+                        }
 
 
-                });
+                    });
+
+        }
+
+        else {
+            //Toast
+            Context context = getApplicationContext();
+            CharSequence text = "Missing data.";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+
+
 
 
     }
